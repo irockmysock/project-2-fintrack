@@ -2,6 +2,12 @@ var React = require("react");
 
 class Login extends React.Component {
   render() {
+
+    let wrongPW;
+    if (this.props.rows[0] === "invalid") {
+        wrongPW = (<p>Invalid username or password. Please try again.</p>);
+    }
+
     return (
         <html>
             <head>
@@ -27,23 +33,24 @@ class Login extends React.Component {
                         <div class="card-title">
                             <h2>My FinTrack</h2>
                         </div>
+                        {wrongPW}
                         <div class="card-header">
                             <h3>Sign In</h3>
 
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form className="login-form" method="POST" action="/login">
                                 <div class="input-group form-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Username"/>
+                                    <input type="text" class="form-control" placeholder="Username" name="username"/>
                                 </div>
                                 <div class="input-group form-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                                     </div>
-                                    <input type="password" class="form-control" placeholder="Password"/>
+                                    <input type="password" class="form-control" placeholder="Password" name="password"/>
                                 </div>
                                 <div class="row align-items-center remember">
                                     <input type="checkbox"/>Remember Me

@@ -19,7 +19,7 @@ module.exports = (app, allModels) => {
   //Login + Register User Routes
   app.get('/', loginControllerCallbacks.redirect);
   app.get('/login', loginControllerCallbacks.login);
-  // app.post('/login', loginControllerCallbacks.loginCheck);
+  app.post('/login', loginControllerCallbacks.loginCheck);
   app.get('/register', loginControllerCallbacks.register);
   app.post('/register', loginControllerCallbacks.createUser);
 

@@ -10,21 +10,30 @@ const PSALT = 'sErceT pAsSwoRd adDiTioNaL pHraSe';
 module.exports = (dbPoolInstance) => {
 
   //Check Login Function
-  let checkLogin = (callback, userDetails) =>{
-    let queryString = "SELECT * FROM users WHERE username = '" + userDetails.username +"'";
-    dbPoolInstance.query(queryString, (error,queryResult)=> {
-      if (error) {
-        callback(error,0,null);
-      } else {
-        let passwordHash = sha256(userDetails.password + PSALT);
-        if (queryResult.rows.length>0 && passwordHash === queryResult.rows[0].password){
-          callback(error,queryResult.rows[0].id,queryResult.rows[0].username);
-        } else {
-          callback(error,0,null);
+  let checkUser = (callback,username,password) => {
+
+    const query = 'SELECT * FROM users WHERE username=$1 AND password=$2';
+    // let hashedPassword = sha256( password + TWEEDR );
+    let values = [username, password];
+    // console.log("hashed pw is")
+    // console.log(hashedPassword)
+
+    dbPoolInstance.query(query, values, (error, queryResult) => {
+
+        if( error ){
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+        } else if (queryResult.rows[0] === undefined) {
+            callback(null, null)
+        // invoke callback function with results after query has executed
+        } else if( queryResult.rows.length > 0 ){
+            callback(null, queryResult.rows);
+        } else{
+            callback(null, null);
         }
-      }
-    });
-  };
+    })
+  }
 
   //Add User Function
   let createUser = (callback , users) => {
@@ -59,7 +68,7 @@ module.exports = (dbPoolInstance) => {
 
 
   return {
-    checkLogin,
+    checkUser,
     createUser
   };
 

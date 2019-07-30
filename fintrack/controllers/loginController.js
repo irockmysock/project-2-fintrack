@@ -11,7 +11,7 @@ module.exports = (db) => {
    */
 
   function hash(string) {
-    let hashedString = sha256( string + SALT);
+    let hashedString = sha256( string + SALT );
     return hashedString;
   }
 
@@ -21,53 +21,35 @@ module.exports = (db) => {
   }
 
   let displayLoginPage = (request,response) =>{
-      response.render('pages/LoginPage');
+        let defaultpage = ["default"];
+        response.render ('pages/LoginPage', {rows: defaultpage});
+        // response.render('pages/LoginPage');
   }
 
   let checkUserCallback = (request, response) => {
         var callback = function (error,results) {
-            let hashedPassword = sha256( request.body.password + TWEEDR );
+
             if (results===null){
+
+                let data = ["invalid"]
+                response.render('pages/LoginPage', {rows: data});
+                console.log(results);
                 console.log("Wrong password!");
-                // console.log(results)
-                // console.log("request body pw")
-                // console.log(request.body.username)
-                response.redirect('/login');
+
             } else if (hashedPassword === results[0].password) {
                 // console.log(request.cookies)
                 let username = request.body.username;
-                let sessionToken = sha256( username + TWEEDR );
+                let sessionToken = hash(username);
 
                 response.cookie('loggedin', sessionToken);
                 response.cookie('username', request.body.username);
-
-                response.redirect('/user/'+results[0].userid);
+                response.redirect('/')
+                // response.redirect('/user/'+results[0].id);
             }
         }
-
-        db.users.checkUser(callback, request.body.username, request.body.password);
+        let hashedPassword = hash(request.body.password);
+        db.login.checkUser(callback, request.body.username, hashedPassword);
     };
-
-  // let checkLogin = (request,response) => {
-  //     let callback = function(error, id, username) {
-  //       if(error){
-  //         response.send(error);
-  //       } else if (id>0) {
-  //         let sessionCookie = sha256(`true` + SALT + id);
-  //         let user_name = username;
-  //         let user_id = id
-
-  //         response.cookie('meow',sessionCookie);
-  //         response.cookie('woof',user_name);
-  //         response.cookie('woof',user_id);
-  //         response.redirect('/home/' + user);
-  //       }else{
-  //         response.redirect('/login');
-  //       }
-  //     }
-  //     db.login.checkLogin(callback,request.body);
-
-  // }
 
   let displayRegisterPage = (request,response) => {
         let defaultpage = [];
