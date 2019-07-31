@@ -1,7 +1,3 @@
-const sha256=require('js-sha256');
-const PSALT = 'sErceT pAsSwoRd adDiTioNaL pHraSe';
-
-
 /**
  * ===========================================
  * Export model functions as a module
