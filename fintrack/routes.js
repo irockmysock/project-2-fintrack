@@ -25,7 +25,8 @@ module.exports = (app, allModels) => {
 
   // //User Page
   app.get('/home/:username', userControllerCallbacks.home);
-  // app.post('/home/:username',userControllerCallbacks.addTweed);
-  // app.get('/home/:username/alltweeds', userControllerCallbacks.allTweeds);
+  app.get('/home/:username/newTransaction', userControllerCallbacks.newTxn);
+  app.post('/home/:username/newTransaction',userControllerCallbacks.addTxn);
+  app.get('/home/:username/allTransactions', userControllerCallbacks.transactions);
 
 }

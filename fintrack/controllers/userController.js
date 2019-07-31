@@ -15,80 +15,6 @@ module.exports = (db) => {
     return hashedString;
   }
 
-  // let redirectPage = (request,response) => {
-  //     // response.redirect('/login');
-  //     response.render('pages/Dashboard')
-  // }
-
-  // let displayLoginPage = (request,response) =>{
-  //       let defaultpage = ["default"];
-  //       response.render ('pages/LoginPage', {rows: defaultpage});
-  //       // response.render('pages/LoginPage');
-  // }
-
-  // let checkUserCallback = (request, response) => {
-  //       var callback = function (error,results) {
-
-  //           if (results===null){
-
-  //               let data = ["invalid"]
-  //               response.render('pages/LoginPage', {rows: data});
-  //               console.log(results);
-  //               console.log("Wrong password!");
-
-  //           } else if (hashedPassword === results[0].password) {
-  //               // console.log(request.cookies)
-  //               let username = request.body.username;
-  //               let sessionToken = hash(username);
-
-  //               response.cookie('loggedin', sessionToken);
-  //               response.cookie('username', request.body.username);
-  //               response.redirect('/')
-  //               // response.redirect('/user/'+results[0].id);
-  //           }
-  //       }
-  //       let hashedPassword = hash(request.body.password);
-  //       db.login.checkUser(callback, request.body.username, hashedPassword);
-  //   };
-
-  // let displayRegisterPage = (request,response) => {
-  //       let defaultpage = [];
-  //       response.render ('pages/RegisterPage', {rows: defaultpage});
-  //       // console.log("LENGTH IS")
-  //       // console.log(defaultpage.length)
-  // }
-
-  // let createUserCallback = (request,response) => {
-  //       let callback = function (error,result) {
-  //         if (error){
-  //           response.send(error);
-  //         } else if (result) {
-  //               let username = request.cookies.username;
-  //               // let sessionToken = sha256( username + SALT );
-  //               let sessionToken = hash(username);
-  //               // console.log("sessionToken is: ")
-  //               // console.log(sessionToken);
-  //               // // they have succesfully registered, log them in
-  //               response.cookie('loggedin', sessionToken);
-  //               response.cookie('username', request.body.username);
-
-  //               response.redirect('/login');
-
-  //         } else {
-  //           let data = ["usernameExist"]
-  //           response.render('pages/RegisterPage', {rows: data});
-  //         }
-  //       };
-
-  //       // let hashedPW = sha256( request.body.password + SALT );
-  //       let hashedPW = hash(request.body.password);
-  //       let userDetails = {
-  //                   username: request.body.username,
-  //                   password: hashedPW
-  //               }
-  //       db.login.createUser(callback,userDetails);
-  // };
-
   let displayHomePage = (request,response) => {
         var callback = function (error,results) {
 
@@ -105,18 +31,100 @@ module.exports = (db) => {
                     // response.redirect('/')
                     // response.redirect('/user/'+results[0].id);
                 } else {
-                    response.send("PLEASE LOG IN BITCH!")
+                    response.redirect('/')
                 }
             }
         }
-        db.users.checkAccounts(callback, request.params.username);
+        db.users.checkLatestTxns(callback, request.params.username);
+        // db.users.checkAccounts(callback, request.params.username);
+    };
+
+    let displayTransactions = (request,response) => {
+        var callback = function (error,results) {
+
+            if (results===null){
+
+                response.send("NO DATA")
+
+            } else {
+                if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username)) {
+                    // console.log(request.cookies)
+                    console.log("REQUEST params IS")
+                    console.log(request.params.username);
+                    response.render('pages/Transactions',results )
+                    // response.redirect('/')
+                    // response.redirect('/user/'+results[0].id);
+                } else {
+                    response.redirect('/')
+                }
+            }
+        }
+        db.users.checkAllTransactions(callback, request.params.username);
+        // db.users.checkAccounts(callback, request.params.username);
+    };
+
+    let newTxnPage = (request,response) => {
+        let data = {
+            categories: null,
+            types: null,
+            username: [request.params.username],
+        };
+
+        var callback = function (error,results) {
+            if (results===null){
+                response.send("NO DATA")
+            } else {
+                if (request.cookies.loggedin === hash(request.params.username)) {
+                        console.log("THERE ARE RESULTS FROM CATEGORIES")
+                        // response.send(results);
+                        data.categories = results.rows;
+
+                        var callback2 = function (error,results2) {
+                            if (results===null){
+                                response.send("NO DATA")
+                            } else {
+                                console.log("THERE ARE RESULTS FROM TXN TYPES")
+                                data.types = results2.rows;
+                                // response.send(data)
+                                response.render('pages/AddTxn', data)
+                            }
+                        }
+                        db.users.getTxnTypes(callback2);
+                }  else {
+                    response.redirect('/')
+                }
+            }
+        };
+        db.users.getCategories(callback);
+    }
+
+
+    let addTransaction = (request,response) => {
+        // response.send("ADDED TRANSACTION!")
+        var callback = function (error,results) {
+
+            if (results===null){
+
+                response.send("NO DATA")
+
+            } else {
+                if (request.cookies.loggedin === hash(request.params.username)) {
+                    // console.log(request.cookies)
+                    console.log("REQUEST params IS")
+                    console.log(request.params.username);
+                    response.redirect('/home/'+request.params.username )
+                    // response.redirect('/')
+                    // response.redirect('/user/'+results[0].id);
+                } else {
+                    response.redirect('/')
+                }
+            }
+        }
+        db.users.postTxn(callback, request.body.amount, request.body.transaction_date, request.body.transaction_type, request.body.category_id, request.cookies.userid, request.body.details);
     };
 
 
 
-        // response.render('pages/Dashboard', )
-      // response.send('HELLO WORLD')
-  // }
 
 
   /**
@@ -129,7 +137,9 @@ module.exports = (db) => {
     // login: displayLoginPage,
     // loginCheck: checkUserCallback,
     // register:displayRegisterPage,
-    // createUser:createUserCallback,
+    addTxn: addTransaction,
+    newTxn: newTxnPage,
+    transactions:displayTransactions,
     home: displayHomePage
   };
 

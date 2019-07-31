@@ -1,6 +1,6 @@
 var React = require("react");
 
-class Dashboard extends React.Component {
+class Transactions extends React.Component {
   render() {
     return (
         <html lang="en">
@@ -8,7 +8,7 @@ class Dashboard extends React.Component {
             <meta charset="utf-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-            <title>Dashboard</title>
+            <title>Transactions</title>
 
             <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/dashboard/"/>
 
@@ -123,20 +123,12 @@ class Dashboard extends React.Component {
 
               <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-
-
-
-
-
-
-
-
               <h2>Transactions</h2>
               <div class="table-responsive">
                 <table class="table table-striped table-sm">
                   <thead>
                     <tr>
-
+                      <th>#</th>
                       <th>Date</th>
                       <th>Amount</th>
                       <th>Category</th>
@@ -148,7 +140,7 @@ class Dashboard extends React.Component {
                   {this.props.rows.map(transaction =>
 
                     <tr>
-
+                      <td>{transaction.id}</td>
                       <td>{String(transaction.transaction_date).slice(4,15)}</td>
                       <td>${transaction.amount}</td>
                       <td>{transaction.cat_name}</td>
@@ -158,7 +150,7 @@ class Dashboard extends React.Component {
                     )}
 
                     <tr>
-
+                      <td>1,015</td>
                       <td>sodales</td>
                       <td>ligula</td>
                       <td>in</td>
@@ -179,8 +171,6 @@ class Dashboard extends React.Component {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <script src="dashboard.js"></script></body>
 
-        <script src="../script.js"></script>
-
         </html>
 
 
@@ -189,7 +179,7 @@ class Dashboard extends React.Component {
   }
 }
 
-module.exports = Dashboard;
+module.exports = Transactions;
 
 // <html>
 //             <div>

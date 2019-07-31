@@ -16,8 +16,8 @@ module.exports = (db) => {
   }
 
   let redirectPage = (request,response) => {
-      // response.redirect('/login');
-      response.render('pages/Dashboard')
+      response.redirect('/login');
+      // response.render('pages/Dashboard')
   }
 
   let displayLoginPage = (request,response) =>{
@@ -43,6 +43,8 @@ module.exports = (db) => {
 
                 response.cookie('loggedin', sessionToken);
                 response.cookie('username', request.body.username);
+                response.cookie('userid', results[0].id);
+
                 response.redirect('/home/'+request.body.username)
                 // response.redirect('/user/'+results[0].id);
             }
@@ -71,6 +73,7 @@ module.exports = (db) => {
                 // // they have succesfully registered, log them in
                 response.cookie('loggedin', sessionToken);
                 response.cookie('username', request.body.username);
+                response.cookie('userid', results[0].id);
 
                 response.redirect('/login');
 
@@ -84,7 +87,7 @@ module.exports = (db) => {
         let hashedPW = hash(request.body.password);
         let userDetails = {
                     username: request.body.username,
-                    password: hashedPW
+                    password: hashedPW,
                 }
         db.login.createUser(callback,userDetails);
   };
