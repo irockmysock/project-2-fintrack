@@ -131,7 +131,7 @@ class Dashboard extends React.Component {
 
 
 
-              <h2>Transactions</h2>
+              <h2>Latest Transactions</h2>
               <div class="table-responsive">
                 <table class="table table-striped table-sm">
                   <thead>
@@ -142,6 +142,7 @@ class Dashboard extends React.Component {
                       <th>Category</th>
                       <th>Account</th>
                       <th>Details</th>
+                      <th>Edit</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -154,6 +155,7 @@ class Dashboard extends React.Component {
                       <td>{transaction.cat_name}</td>
                       <td>{transaction.type}</td>
                       <td>{transaction.details}</td>
+                      <td><a href={"/home/"+transaction.username+"/"+transaction.txnid+"/editTransaction"}>EDIT </a></td>
                     </tr>
                     )}
 

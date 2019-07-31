@@ -16,8 +16,11 @@ module.exports = (db) => {
   }
 
   let redirectPage = (request,response) => {
-      response.redirect('/login');
-      // response.render('pages/Dashboard')
+    if (request.cookies.username){
+      response.redirect('/home/'+request.cookies.username);
+    } else {
+        response.redirect('/login');
+    }
   }
 
   let displayLoginPage = (request,response) =>{

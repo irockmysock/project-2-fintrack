@@ -40,6 +40,7 @@ module.exports = (dbPoolInstance) => {
     // console.log("hashed pw is")
     // console.log(hashedPassword)
 
+
     dbPoolInstance.query(query, values, (error, queryResult) => {
 
         if( error ){
@@ -147,30 +148,52 @@ module.exports = (dbPoolInstance) => {
 
 
 
-  // let addTransactions = (callback,username) => {
+  let showTxn = (callback,txnID,username) => {
 
-  //   const query = "SELECT * FROM categories;
-  //   // let hashedPassword = sha256( password + TWEEDR );
-  //   let values = [username];
-  //   // console.log("hashed pw is")
-  //   // console.log(hashedPassword)
+    const query = "SELECT * FROM transactions INNER JOIN users ON (transactions.user_id=users.id) INNER JOIN categories ON (categories.id=transactions.category_id) INNER JOIN transaction_types ON (transactions.transaction_type=transaction_types.id) WHERE transactions.txnid=$1 AND username=$2;"
+    // let hashedPassword = sha256( password + TWEEDR );
+    let values = [txnID, username];
+    // console.log("hashed pw is")
+    // console.log(hashedPassword)
 
-  //   dbPoolInstance.query(query, values, (error, queryResult) => {
+    dbPoolInstance.query(query, values, (error, queryResult) => {
 
-  //       if( error ){
-  //       // invoke callback function with results after query has executed
-  //       callback(error, null);
+        if( error ){
+        // invoke callback function with results after query has executed
+        callback(error, null);
 
-  //       } else if (queryResult.rows[0] === undefined) {
-  //           callback(null, null)
-  //       // invoke callback function with results after query has executed
-  //       } else if( queryResult.rows.length > 0 ){
-  //           callback(null, queryResult);
-  //       } else{
-  //           callback(null, null);
-  //       }
-  //   })
-  // }
+        } else if (queryResult.rows[0] === undefined) {
+            callback(null, null)
+        // invoke callback function with results after query has executed
+        } else if( queryResult.rows.length > 0 ){
+            callback(null, queryResult);
+        } else{
+            callback(null, null);
+        }
+    })
+  }
+
+
+  let editTxn = (callback, amount, transaction_date, transaction_type, category_id, user_id, details, id) => {
+
+    const query = "UPDATE transactions SET amount=$1, transaction_date=$2, transaction_type=$3, category_id=$4, user_id=$5, details=$6 WHERE id=$7 RETURNING *";
+
+    let values = [amount, transaction_date, transaction_type, category_id, user_id, details, id]
+
+    dbPoolInstance.query(query, values, (error, queryResult) => {
+        if( error ){
+        // invoke callback function with results after query has executed
+        callback(error, null);
+        } else if (queryResult.rows[0] === undefined) {
+            callback(null, null)
+        // invoke callback function with results after query has executed
+        } else if( queryResult.rows.length > 0 ){
+            callback(null, queryResult);
+        } else{
+            callback(null, null);
+        }
+    })
+  }
 
 
 
@@ -182,6 +205,8 @@ module.exports = (dbPoolInstance) => {
     getCategories,
     getTxnTypes,
     postTxn,
+    showTxn,
+    editTxn,
   };
 
 };
