@@ -16,14 +16,19 @@ module.exports = (app, allModels) => {
   const loginControllerCallbacks = require('./controllers/loginController')(allModels);
   const userControllerCallbacks = require('./controllers/userController')(allModels);
 
-  //Login + Register User Routes
+
+   // *  =========================================
+   // *         Login + Register User Routes
+   // *  =========================================
   app.get('/', loginControllerCallbacks.redirect);
   app.get('/login', loginControllerCallbacks.login);
   app.post('/login', loginControllerCallbacks.loginCheck);
   app.get('/register', loginControllerCallbacks.register);
   app.post('/register', loginControllerCallbacks.createUser);
 
-  // //User Page
+   // *  =========================================
+   // *   User Homepage and Transaction Routes
+   // *  =========================================
   app.get('/home/:username', userControllerCallbacks.home);
   app.get('/home/:username/newTransaction', userControllerCallbacks.newTxnPage);
   app.post('/home/:username/newTransaction',userControllerCallbacks.addTxn);

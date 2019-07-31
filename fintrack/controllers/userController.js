@@ -182,6 +182,8 @@ module.exports = (db) => {
             if (results===null){
 
                 response.send("NO DATA")
+                console.log("REQ BOD DATE")
+                console.log(request.body.transaction_date)
 
             } else {
                 if (request.cookies.loggedin === hash(request.params.username)) {
