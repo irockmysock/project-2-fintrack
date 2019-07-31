@@ -43,7 +43,7 @@ module.exports = (db) => {
 
                 response.cookie('loggedin', sessionToken);
                 response.cookie('username', request.body.username);
-                response.redirect('/')
+                response.redirect('/home/'+request.body.username)
                 // response.redirect('/user/'+results[0].id);
             }
         }

@@ -6,6 +6,13 @@ class Dashboard extends React.Component {
         <html>
             <div>
             This is the dashboard!
+            {this.props.rows.map(account =>
+                <div>
+                <h2>Account</h2>
+                <p>{account.account_id}</p>
+                </div>
+            )}
+
             </div>
 
         </html>

@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS categories (
 
 CREATE TABLE IF NOT EXISTS transaction_types (
 	id SERIAL PRIMARY KEY,
-	type TEXT,
+	type TEXT
 );
 
 CREATE TABLE IF NOT EXISTS user_accounts (
