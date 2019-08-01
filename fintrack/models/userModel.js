@@ -213,6 +213,33 @@ module.exports = (dbPoolInstance) => {
   }
 
 
+  let sumLatestTxns = (callback,username) => {
+
+    const query = "SELECT SUM(amount) FROM transactions INNER JOIN users ON (users.id=transactions.user_id) INNER JOIN categories ON (transactions.category_id=categories.id) INNER JOIN transaction_types ON (transactions.transaction_type=transaction_types.id) WHERE username=$1 AND transaction_date >= date_trunc('month', CURRENT_DATE)";
+
+    let values = [username];
+
+    dbPoolInstance.query(query, values, (error, queryResult) => {
+
+        if( error ){
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+        } else if (queryResult.rows[0] === undefined) {
+            callback(null, null)
+        // invoke callback function with results after query has executed
+        } else if( queryResult.rows.length > 0 ){
+            callback(null, queryResult);
+        } else{
+            callback(null, null);
+        }
+    })
+  }
+
+
+
+
+
   return {
     checkAccounts,
     checkLatestTxns,
@@ -223,6 +250,7 @@ module.exports = (dbPoolInstance) => {
     showTxn,
     editTxn,
     deleteTxn,
+    sumLatestTxns,
   };
 
 };

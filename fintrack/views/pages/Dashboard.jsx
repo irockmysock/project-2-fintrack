@@ -129,8 +129,10 @@ class Dashboard extends React.Component {
 
 
 
+              <h2>TOTAL SPEND FOR THIS MONTH!</h2>
+              <h2>${this.props.sum.rows[0].sum}</h2>
 
-
+              <a href={"/home/" + this.props.username[0] + "/newTransaction"}>ADD New Transaction </a>
 
               <h2>Latest Transactions</h2>
               <div class="table-responsive">
@@ -147,7 +149,7 @@ class Dashboard extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                  {this.props.rows.map(transaction =>
+                  {this.props.transactions.rows.map(transaction =>
 
                     <tr>
 

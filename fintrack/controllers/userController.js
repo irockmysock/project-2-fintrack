@@ -20,6 +20,13 @@ module.exports = (db) => {
   }
 
   let displayHomePage = (request,response) => {
+        let data = {
+            transactions: null,
+            sum: null,
+            username: [request.params.username],
+        };
+
+
         var callback = function (error,results) {
 
             if (results===null){
@@ -27,14 +34,25 @@ module.exports = (db) => {
                 response.send("NO DATA")
 
             } else {
-                if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username)) {
-                    // console.log(request.cookies)
-                    console.log("REQUEST params IS")
-                    console.log(request.params.username);
-                    // response.send(results)
-                    response.render('pages/Dashboard',results )
-                    // response.redirect('/')
-                    // response.redirect('/user/'+results[0].id);
+                if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username) && request.params.username === request.cookies.username) {
+
+                    data.transactions = results;
+                    var sumCallback = function (error,results2) {
+
+                        if (results===null){
+                            response.send("NO DATA")
+                        } else {
+                            data.sum = results2;
+                            // console.log("TYPE IS")
+                            // console.log(typeof results2.rows[0].sum)
+                            // response.send(results2)
+                            response.render('pages/Dashboard', data)
+                        }
+                    }
+                    db.users.sumLatestTxns(sumCallback, request.params.username);
+                    // response.send(data.transactions)
+                    // response.render('pages/Dashboard',data )
+
                 } else {
                     response.redirect('/')
                 }
@@ -45,6 +63,7 @@ module.exports = (db) => {
     };
 
     let displayTransactions = (request,response) => {
+
         var callback = function (error,results) {
 
             if (results===null){
@@ -56,6 +75,7 @@ module.exports = (db) => {
                     // console.log(request.cookies)
                     console.log("REQUEST params IS")
                     console.log(request.params.username);
+
                     response.render('pages/Transactions',results )
                     // response.redirect('/')
                     // response.redirect('/user/'+results[0].id);

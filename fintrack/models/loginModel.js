@@ -44,11 +44,12 @@ module.exports = (dbPoolInstance) => {
 
         let queryString = "INSERT into users (username,password) VALUES ($1,$2) returning *";
         let values = [users.username,users.password];
-        dbPoolInstance.query(queryString, values, (error,queryResult)=>{
+
+        dbPoolInstance.query(queryString, values, (error,queryResult2)=>{
           if (error){
             callback (error,false);
           } else {
-            callback(null,true);
+            callback(null,queryResult2);
           }
         });
 

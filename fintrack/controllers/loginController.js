@@ -76,7 +76,7 @@ module.exports = (db) => {
                 // // they have succesfully registered, log them in
                 response.cookie('loggedin', sessionToken);
                 response.cookie('username', request.body.username);
-                response.cookie('userid', results[0].id);
+                response.cookie('userid', result.rows[0].id);
 
                 response.redirect('/login');
 
