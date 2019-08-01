@@ -1,64 +1,58 @@
 var React = require("react");
 
-class Login extends React.Component {
+class Test extends React.Component {
   render() {
 
-    let wrongPW;
-    if (this.props.rows[0] === "invalid") {
-        wrongPW = (<p>Invalid username or password. Please try again.</p>);
-    }
+    // let wrongPW;
+    // if (this.props.rows[0] === "invalid") {
+    //     wrongPW = (<p className="wrongPW">Invalid username or password. Please try again.</p>);
+    // }
 
     return (
         <html>
             <head>
-                <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                <title>Login Page</title>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
                 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-                <title>Login Page</title>
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
 
-                <meta charset="utf-8"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
-                <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
 
                 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"/>
 
+               /
                 <link rel="stylesheet" type="text/css" href="style.css"/>
             </head>
             <body>
             <div class="container">
-
                 <div class="d-flex justify-content-center h-100">
-
                     <div class="card">
-                        <div class="card-title">
-                            <h2>My FinTrack</h2>
-                        </div>
-
                         <div class="card-header">
                             <h3>Sign In</h3>
-                            <div class="d-flex justify-content social_icon">
-                                {wrongPW}
+                            <div class="d-flex justify-content-end social_icon">
+                                <span><i class="fab fa-facebook-square"></i></span>
+                                <span><i class="fab fa-google-plus-square"></i></span>
+                                <span><i class="fab fa-twitter-square"></i></span>
                             </div>
                         </div>
-
                         <div class="card-body">
-                            <form className="login-form" method="POST" action="/login">
+                            <form>
                                 <div class="input-group form-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Username" name="username"/>
+                                    <input type="text" class="form-control" placeholder="username"/>
+
                                 </div>
                                 <div class="input-group form-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                                     </div>
-                                    <input type="password" class="form-control" placeholder="Password" name="password"/>
+                                    <input type="password" class="form-control" placeholder="password"/>
                                 </div>
                                 <div class="row align-items-center remember">
-
+                                    <input type="checkbox"/>Remember Me
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Login" class="btn float-right login_btn"/>
@@ -67,7 +61,7 @@ class Login extends React.Component {
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-center links">
-                                Don't have an account?<a href="/register">Sign Up</a>
+                                Don't have an account?<a href="#">Sign Up</a>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <a href="#">Forgot your password?</a>
@@ -77,9 +71,9 @@ class Login extends React.Component {
                 </div>
             </div>
             </body>
-        </html>
-    );
+            </html>
+);
   }
 }
 
-module.exports = Login;
+module.exports = Test;

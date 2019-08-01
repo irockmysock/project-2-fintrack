@@ -34,6 +34,7 @@ module.exports = (app, allModels) => {
   app.post('/home/:username/newTransaction',userControllerCallbacks.addTxn);
   app.get('/home/:username/allTransactions', userControllerCallbacks.transactions);
   app.get('/home/:username/:txnId/editTransaction', userControllerCallbacks.editTxnPage);
-  app.put('/home/:username/:txnId/', userControllerCallbacks.editTxn);
-
+  app.put('/home/:username/:txnId/', userControllerCallbacks.edit);
+  app.delete('/home/:username/:txnId/', userControllerCallbacks.delete);
+  app.get('/test', userControllerCallbacks.test);
 }

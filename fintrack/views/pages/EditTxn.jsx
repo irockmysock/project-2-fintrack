@@ -57,6 +57,10 @@ class EditTxn extends React.Component {
                <button type="submit" class="btn btn-primary">EDIT Transaction</button>
             </form>
 
+            <form method="POST" action={"/home/"+this.props.username[0]+"/"+this.props.txnData.rows[0].txnid+'/?_method=DELETE'}>
+                <button type="submit" class="btn btn-primary">DELETE Transaction</button>
+            </form>
+
 
 
             </body>

@@ -15,6 +15,10 @@ module.exports = (db) => {
     return hashedString;
   }
 
+  let test = (request,response) => {
+    response.render('pages/test');
+  }
+
   let displayHomePage = (request,response) => {
         var callback = function (error,results) {
 
@@ -182,8 +186,6 @@ module.exports = (db) => {
             if (results===null){
 
                 response.send("NO DATA")
-                console.log("REQ BOD DATE")
-                console.log(request.body.transaction_date)
 
             } else {
                 if (request.cookies.loggedin === hash(request.params.username)) {
@@ -201,6 +203,19 @@ module.exports = (db) => {
         db.users.editTxn(callback, request.body.amount, request.body.transaction_date, request.body.transaction_type, request.body.category_id, request.cookies.userid, request.body.details, request.params.txnId);
     };
 
+    let deleteTransaction = (request,response) => {
+
+        var callback = function (error,results) {
+            if (error) {
+                console.error('query error:', error.stack);
+                response.send( 'query error' );
+            } else if (request.cookies.loggedin === hash(request.params.username)) {
+                // response.redirect('/home/'+request.params.username )
+                response.redirect('/');
+            }
+        }
+        db.users.deleteTxn(callback, request.params.txnId, request.cookies.userid);
+    };
 
 
 
@@ -211,16 +226,14 @@ module.exports = (db) => {
    * ===========================================
    */
   return {
-    // redirect: redirectPage,
-    // login: displayLoginPage,
-    // loginCheck: checkUserCallback,
-    // register:displayRegisterPage,
+    test: test,
     home: displayHomePage,
     transactions: displayTransactions,
     newTxnPage: newTransaction,
     addTxn: addTransaction,
     editTxnPage: showTransaction,
-    editTxn: editTransaction,
+    edit: editTransaction,
+    delete: deleteTransaction,
   };
 
 }

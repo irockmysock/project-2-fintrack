@@ -191,6 +191,26 @@ module.exports = (dbPoolInstance) => {
   }
 
 
+  let deleteTxn = (callback, txnid, userid) => {
+
+    const query = "DELETE FROM transactions WHERE txnid=$1 AND user_id=$2";
+
+    let values = [txnid, userid]
+
+    dbPoolInstance.query(query, values, (error, queryResult) => {
+        if( error ){
+        // invoke callback function with results after query has executed
+        callback(error, null);
+        } else if (queryResult.rows[0] === undefined) {
+            callback(null, null)
+        // invoke callback function with results after query has executed
+        } else if( queryResult.rows.length > 0 ){
+            callback(null, queryResult);
+        } else{
+            callback(null, null);
+        }
+    })
+  }
 
 
   return {
@@ -202,6 +222,7 @@ module.exports = (dbPoolInstance) => {
     postTxn,
     showTxn,
     editTxn,
+    deleteTxn,
   };
 
 };
