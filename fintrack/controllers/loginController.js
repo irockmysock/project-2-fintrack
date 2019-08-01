@@ -95,9 +95,14 @@ module.exports = (db) => {
         db.login.createUser(callback,userDetails);
   };
 
-  // let displayHomePage = (request,response) => {
-  //     response.send('HELLO WORLD')
-  // }
+
+  let logoutController = (request, response) => {
+
+      response.clearCookie('loggedin');
+      response.clearCookie('userid');
+      response.clearCookie('username')
+      response.redirect('/');
+  };
 
 
   /**
@@ -111,7 +116,7 @@ module.exports = (db) => {
     loginCheck: checkUserCallback,
     register:displayRegisterPage,
     createUser:createUserCallback,
-    // home: displayHomePage
+    logout: logoutController,
   };
 
 }

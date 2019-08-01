@@ -25,6 +25,7 @@ module.exports = (app, allModels) => {
   app.post('/login', loginControllerCallbacks.loginCheck);
   app.get('/register', loginControllerCallbacks.register);
   app.post('/register', loginControllerCallbacks.createUser);
+  app.get('/logout', loginControllerCallbacks.logout);
 
    // *  =========================================
    // *   User Homepage and Transaction Routes
