@@ -53,8 +53,10 @@ class Dashboard extends React.Component {
                 </div>
               </div>
 
-              <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+              <h4>Total Expenditure For Current Month</h4>
+              <h4>${this.props.sum.rows[0].sum}</h4>
 
+              <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
               <script src="/script.js"></script>
               <script dangerouslySetInnerHTML={ {__html:
@@ -63,13 +65,10 @@ class Dashboard extends React.Component {
 
               <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
               <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-              <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
 
 
 
 
-              <h4>Total Expenditure For Current Month</h4>
-              <h4>${this.props.sum.rows[0].sum}</h4>
 
               <h2>Latest Transactions</h2>
               <div class="table-responsive">
