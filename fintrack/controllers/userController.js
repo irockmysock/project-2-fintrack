@@ -16,14 +16,31 @@ module.exports = (db) => {
   }
 
   let test = (request,response) => {
-    response.render('pages/test');
+    var callback = function (error,results) {
+            if (results===null){
+                response.send("NO DATA")
+            } else {
+                let data = {
+                    categories: results.rows
+                };
+                // response.send(data)
+                response.render('pages/test', data);
+            }
+    }
+    db.users.expenseByCat(callback, request.cookies.userid)
   }
+
+  let test2 = (request,response) => {
+    response.render('pages/test2')
+  }
+
 
   let displayHomePage = (request,response) => {
         let data = {
             transactions: null,
             sum: null,
             username: [request.params.username],
+            categories: null
         };
 
 
@@ -46,7 +63,17 @@ module.exports = (db) => {
                             // console.log("TYPE IS")
                             // console.log(typeof results2.rows[0].sum)
                             // response.send(results2)
-                            response.render('pages/Dashboard', data)
+                            // response.render('pages/Dashboard', data)
+                            var callback = function (error,results3) {
+                                    if (results===null){
+                                        response.send("NO DATA")
+                                    } else {
+                                        data.categories = results3.rows;
+                                        // response.send(data)
+                                        response.render('pages/Dashboard', data);
+                                    }
+                            }
+                            db.users.expenseByCat(callback, request.cookies.userid)
                         }
                     }
                     db.users.sumLatestTxns(sumCallback, request.params.username);
@@ -254,6 +281,7 @@ module.exports = (db) => {
     editTxnPage: showTransaction,
     edit: editTransaction,
     delete: deleteTransaction,
+    test2:test2,
   };
 
 }

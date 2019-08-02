@@ -38,4 +38,5 @@ module.exports = (app, allModels) => {
   app.put('/home/:username/:txnId/', userControllerCallbacks.edit);
   app.delete('/home/:username/:txnId/', userControllerCallbacks.delete);
   app.get('/test', userControllerCallbacks.test);
+  app.get('/test2', userControllerCallbacks.test2);
 }

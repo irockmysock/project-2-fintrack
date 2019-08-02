@@ -2,77 +2,33 @@ var React = require("react");
 
 class Test extends React.Component {
   render() {
-
-    // let wrongPW;
-    // if (this.props.rows[0] === "invalid") {
-    //     wrongPW = (<p className="wrongPW">Invalid username or password. Please try again.</p>);
-    // }
-
+    let data = {
+        categories: this.props.categories
+    };
+    let jData = JSON.stringify(data);
+    console.log("WOO")
+    console.log(jData);
     return (
-        <html>
-            <head>
-                <title>Login Page</title>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
 
 
-                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"/>
 
-               /
-                <link rel="stylesheet" type="text/css" href="style.css"/>
-            </head>
+
             <body>
-            <div class="container">
-                <div class="d-flex justify-content-center h-100">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Sign In</h3>
-                            <div class="d-flex justify-content-end social_icon">
-                                <span><i class="fab fa-facebook-square"></i></span>
-                                <span><i class="fab fa-google-plus-square"></i></span>
-                                <span><i class="fab fa-twitter-square"></i></span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="username"/>
-
-                                </div>
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                    </div>
-                                    <input type="password" class="form-control" placeholder="password"/>
-                                </div>
-                                <div class="row align-items-center remember">
-                                    <input type="checkbox"/>Remember Me
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Login" class="btn float-right login_btn"/>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="card-footer">
-                            <div class="d-flex justify-content-center links">
-                                Don't have an account?<a href="#">Sign Up</a>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <a href="#">Forgot your password?</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+              <div class="container">
+                <canvas id="myChart"></canvas>
+              </div>
+              <script src="/script.js"></script>
+              <script dangerouslySetInnerHTML={ {__html:
+                    `var cat = ${jData};`
+                  }}/>
+                  <meta charset="UTF-8"/>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+              <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+              <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+              <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
             </body>
-            </html>
-);
+
+    );
   }
 }
 

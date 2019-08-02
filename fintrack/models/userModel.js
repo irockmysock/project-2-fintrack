@@ -236,6 +236,29 @@ module.exports = (dbPoolInstance) => {
     })
   }
 
+  let expenseByCat = (callback,userid) => {
+
+    const query = "SELECT category_id, cat_name, SUM (amount) FROM transactions INNER JOIN categories ON (transactions.category_id=categories.id) WHERE user_id=$1 GROUP BY categories.cat_name, transactions.category_id ORDER BY category_id";
+
+    let values = [userid];
+
+    dbPoolInstance.query(query, values, (error, queryResult) => {
+
+        if( error ){
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+        } else if (queryResult.rows[0] === undefined) {
+            callback(null, null)
+        // invoke callback function with results after query has executed
+        } else if( queryResult.rows.length > 0 ){
+            callback(null, queryResult);
+        } else{
+            callback(null, null);
+        }
+    })
+  }
+
 
 
 
@@ -251,6 +274,7 @@ module.exports = (dbPoolInstance) => {
     editTxn,
     deleteTxn,
     sumLatestTxns,
+    expenseByCat,
   };
 
 };
