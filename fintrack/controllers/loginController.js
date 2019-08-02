@@ -69,16 +69,22 @@ module.exports = (db) => {
             response.send(error);
           } else if (result) {
                 let username = request.cookies.username;
-                // let sessionToken = sha256( username + SALT );
                 let sessionToken = hash(username);
-                // console.log("sessionToken is: ")
-                // console.log(sessionToken);
-                // // they have succesfully registered, log them in
+
                 response.cookie('loggedin', sessionToken);
                 response.cookie('username', request.body.username);
                 response.cookie('userid', result.rows[0].id);
+                userDetails.userid = result.rows[0].id
+                // response.send(result)
 
-                response.redirect('/login');
+                let createAccCallback = function (error,result2) {
+                  if (error){
+                    response.send(error);
+                  } else if (result2) {
+                    response.redirect('/login');
+                  }
+                }
+                db.account.createInitAcc(createAccCallback, userDetails);
 
           } else {
             let data = ["usernameExist"]
@@ -91,6 +97,7 @@ module.exports = (db) => {
         let userDetails = {
                     username: request.body.username,
                     password: hashedPW,
+                    userid: null
                 }
         db.login.createUser(callback,userDetails);
   };

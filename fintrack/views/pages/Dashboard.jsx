@@ -1,11 +1,45 @@
 var React = require("react");
 const Test = require('./test.jsx');
 
-//<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+// https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/slate/bootstrap.min.css
 
 class Dashboard extends React.Component {
   render() {
     let jData = JSON.stringify(this.props);
+
+    let chart;
+    let latestTxns;
+    let sum;
+
+    if (this.props.transactions === null) {
+        chart = (<p class="text-danger text-center">No Data To Display!</p>);
+        latestTxns = (<p class="text-danger">Add A New Transaction!</p>);
+    } else {
+        chart = (<div><canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas><script src="/script.js"></script>
+              <script dangerouslySetInnerHTML={ {__html:
+                    `var data = ${jData};`
+                  }}/>
+
+              <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+              <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script></div>);
+        latestTxns = (<tbody>
+                  {this.props.transactions.rows.map(transaction =>
+
+                    <tr>
+
+                      <td>{String(transaction.transaction_date).slice(8,10)} {String(transaction.transaction_date).slice(4,7)} {String(transaction.transaction_date).slice(11,15)}</td>
+                      <td>${transaction.amount}</td>
+                      <td>{transaction.cat_name}</td>
+                      <td>{transaction.type}</td>
+                      <td>{transaction.details}</td>
+                      <td><a href={"/home/"+transaction.username+"/"+transaction.txnid+"/editTransaction"} class="btn btn-secondary btn-sm">EDIT </a></td>
+                    </tr>
+                    )}
+                  </tbody>);
+
+        sum = (<h2 class="mb-0">${this.props.sum.rows[0].sum}</h2>);
+    }
+
 
     return (
         <html lang="en">
@@ -14,9 +48,9 @@ class Dashboard extends React.Component {
             <meta charset="utf-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-
-
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/slate/bootstrap.min.css"/>
 
             <title>Dashboard</title>
           </head>
@@ -39,40 +73,39 @@ class Dashboard extends React.Component {
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+              <blockquote class="blockquote text-center">
+                  <h1 class="mb-0">Welcome {this.props.username[0]}</h1>
+              </blockquote>
+
               <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
+                <h2>Your Dashboard</h2>
                 <div class="btn-toolbar mb-2 mb-md-0">
                   <div class="btn-group mr-2">
-                  <a href={"/home/" + this.props.username[0] + "/newTransaction"} class="btn btn-sm btn-outline-secondary">Add New Transaction </a>
-                  <a href={"/home/" + this.props.username[0] + "/allTransactions"} class="btn btn-sm btn-outline-secondary">All Transactions </a>
+                  <a href={"/home/" + this.props.username[0] + "/newTransaction"} class="btn btn-sm btn-primary">Add New Transaction </a>
+                  <a href={"/home/" + this.props.username[0] + "/allTransactions"} class="btn btn-sm btn-primary">All Transactions </a>
                   </div>
-                  <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                  <button type="button" class="btn btn-sm btn-primary dropdown-toggle">
                     <span data-feather="calendar"></span>
                     Current month
                   </button>
                 </div>
               </div>
 
-              <h4>Total Expenditure For Current Month</h4>
-              <h4>${this.props.sum.rows[0].sum}</h4>
+              <blockquote class="blockquote text-center">
+                  <p class="mb-0">Total Expenditure For Current Month</p>
 
-              <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                  {sum}
 
-              <script src="/script.js"></script>
-              <script dangerouslySetInnerHTML={ {__html:
-                    `var cat = ${jData};`
-                  }}/>
+              </blockquote>
 
-              <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-              <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+              {chart}
 
 
 
-
-
-              <h2>Latest Transactions</h2>
+              <h3>Latest Transactions</h3>
               <div class="table-responsive">
-                <table class="table table-striped table-sm">
+                <table class="table table-striped table-sm table-primary">
                   <thead>
                     <tr>
 
@@ -82,22 +115,12 @@ class Dashboard extends React.Component {
                       <th>Account</th>
                       <th>Description</th>
                       <th>Edit</th>
+
                     </tr>
                   </thead>
-                  <tbody>
-                  {this.props.transactions.rows.map(transaction =>
 
-                    <tr>
+                  {latestTxns}
 
-                      <td>{String(transaction.transaction_date).slice(4,15)}</td>
-                      <td>${transaction.amount}</td>
-                      <td>{transaction.cat_name}</td>
-                      <td>{transaction.type}</td>
-                      <td>{transaction.details}</td>
-                      <td><a href={"/home/"+transaction.username+"/"+transaction.txnid+"/editTransaction"} class="btn btn-secondary btn-sm">EDIT </a></td>
-                    </tr>
-                    )}
-                  </tbody>
                 </table>
               </div>
             </main>

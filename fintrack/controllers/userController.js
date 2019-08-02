@@ -48,7 +48,7 @@ module.exports = (db) => {
 
             if (results===null){
 
-                response.send("NO DATA")
+                response.render('pages/Dashboard', data)
 
             } else {
                 if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username) && request.params.username === request.cookies.username) {
@@ -132,7 +132,7 @@ module.exports = (db) => {
                         data.categories = results.rows;
 
                         var callback2 = function (error,results2) {
-                            if (results===null){
+                            if (results2===null){
                                 response.send("NO DATA")
                             } else {
                                 console.log("THERE ARE RESULTS FROM TXN TYPES")
@@ -141,7 +141,7 @@ module.exports = (db) => {
                                 response.render('pages/AddTxn', data)
                             }
                         }
-                        db.users.getTxnTypes(callback2);
+                        db.users.checkAccounts(callback2,request.params.username );
                 }  else {
                     response.redirect('/')
                 }
@@ -197,14 +197,14 @@ module.exports = (db) => {
                             if (results===null){
                                 response.send("NO DATA")
                             } else {
-                                console.log("THERE ARE RESULTS FROM TXN TYPES")
+                                console.log("USER HAS ACCOUNTS")
                                 data.types = results2.rows;
 
                                 var callbackTxnData = function (error,results3) {
                                     if (results===null){
                                         response.send("NO TXN DATA")
                                     } else {
-                                        console.log("THERE ARE RESULTS FROM TXN DATA");
+                                        console.log("USER HAS TXNS");
                                         console.log(results3);
                                         data.txnData = results3;
                                         // response.send(data);
@@ -216,7 +216,7 @@ module.exports = (db) => {
                             }
 
                         }
-                        db.users.getTxnTypes(callbackTxnType);
+                        db.users.checkAccounts(callbackTxnType, request.params.username);
                 }  else {
                     response.redirect('/')
                 }

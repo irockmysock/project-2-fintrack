@@ -10,13 +10,13 @@ let catChart = document.getElementById('myChart').getContext('2d');
     Chart.defaults.global.defaultFontColor = '#777';
 
     let labelValues = [];
-    cat.categories.forEach(label=>{
+    data.categories.forEach(label=>{
         labelValues.push(label.cat_name);
     });
     console.log(labelValues);
 
     let catAmounts = [];
-    cat.categories.forEach(cat => {
+    data.categories.forEach(cat => {
         catAmounts.push(cat.sum);
     });
     console.log("CAT AMOUNT")

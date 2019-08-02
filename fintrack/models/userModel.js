@@ -8,7 +8,7 @@ module.exports = (dbPoolInstance) => {
   //Check User Accounts
   let checkAccounts = (callback,username) => {
 
-    const query = 'SELECT * FROM users INNER JOIN user_accounts ON (users.id=user_accounts.user_id) WHERE username=$1';
+    const query = 'SELECT * FROM users INNER JOIN user_accounts ON (users.id=user_accounts.user_id)INNER JOIN transaction_types ON (transaction_types.id=user_accounts.account_id)WHERE username=$1';
     let values = [username];
 
     dbPoolInstance.query(query, values, (error, queryResult) => {

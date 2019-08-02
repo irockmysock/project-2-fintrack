@@ -33,6 +33,7 @@ module.exports = (dbPoolInstance) => {
 
   //Add User Function
   let createUser = (callback , users) => {
+
     let queryString = "SELECT * FROM users WHERE username=$1";
     let values = [users.username];
     dbPoolInstance.query(queryString, values, (error,queryResult) => {
@@ -43,15 +44,15 @@ module.exports = (dbPoolInstance) => {
       } else if (queryResult.rows.length === 0 ) {
 
         let queryString = "INSERT into users (username,password) VALUES ($1,$2) returning *";
-        let values = [users.username,users.password];
+        let values = [users.username, users.password];
 
         dbPoolInstance.query(queryString, values, (error,queryResult2)=>{
           if (error){
             callback (error,false);
           } else {
-            callback(null,queryResult2);
+            callback(null, queryResult2);
           }
-        });
+        })
 
       } else {
         console.log("USERNAME EXISITS");
