@@ -31,7 +31,7 @@ module.exports = (db) => {
   }
 
   let test2 = (request,response) => {
-    response.render('pages/test2')
+    response.render('pages/LayoutCom')
   }
 
 
@@ -40,7 +40,8 @@ module.exports = (db) => {
             transactions: null,
             sum: null,
             username: [request.params.username],
-            categories: null
+            categories: null,
+            accounts: null,
         };
 
 
@@ -54,6 +55,7 @@ module.exports = (db) => {
                 if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username) && request.params.username === request.cookies.username) {
 
                     data.transactions = results;
+
                     var sumCallback = function (error,results2) {
 
                         if (results===null){
@@ -64,16 +66,27 @@ module.exports = (db) => {
                             // console.log(typeof results2.rows[0].sum)
                             // response.send(results2)
                             // response.render('pages/Dashboard', data)
-                            var callback = function (error,results3) {
+                            var catCallback = function (error,results3) {
                                     if (results===null){
                                         response.send("NO DATA")
                                     } else {
                                         data.categories = results3.rows;
                                         // response.send(data)
-                                        response.render('pages/Dashboard', data);
+                                        // response.render('pages/Dashboard', data);
+                                        var accCallback = function (error,results4) {
+                                            if (results===null){
+                                                response.send("NO Accounts")
+                                            } else {
+
+                                                data.accounts = results4.rows
+                                                // response.send(data)
+                                                response.render('pages/Dashboard', data)
+                                            }
+                                        }
+                                        db.accounts.queryAllAccounts(accCallback, request.params.username);
                                     }
                             }
-                            db.users.expenseByCat(callback, request.cookies.userid)
+                            db.users.expenseByCat(catCallback, request.cookies.userid)
                         }
                     }
                     db.users.sumLatestTxns(sumCallback, request.params.username);
@@ -90,6 +103,12 @@ module.exports = (db) => {
     };
 
     let displayTransactions = (request,response) => {
+        let data = {
+            transactions: null,
+            sum: null,
+            username: [request.params.username],
+            categories: null
+        };
 
         var callback = function (error,results) {
 
@@ -99,20 +118,17 @@ module.exports = (db) => {
 
             } else {
                 if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username)) {
-                    // console.log(request.cookies)
-                    console.log("REQUEST params IS")
-                    console.log(request.params.username);
 
-                    response.render('pages/Transactions',results )
-                    // response.redirect('/')
-                    // response.redirect('/user/'+results[0].id);
+                    data.transactions = results.rows
+
+                    response.render('pages/Transactions',data )
+
                 } else {
                     response.redirect('/')
                 }
             }
         }
         db.users.checkAllTransactions(callback, request.params.username);
-        // db.users.checkAccounts(callback, request.params.username);
     };
 
     let newTransaction = (request,response) => {
@@ -121,6 +137,9 @@ module.exports = (db) => {
             types: null,
             username: [request.params.username],
         };
+
+        console.log("hashed name is");
+        console.log(hash(request.params.username));
 
         var callback = function (error,results) {
             if (results===null){

@@ -17,12 +17,14 @@ CREATE TABLE IF NOT EXISTS transactions (
 
 CREATE TABLE IF NOT EXISTS categories (
 	id SERIAL PRIMARY KEY,
-	cat_name TEXT
+	cat_name TEXT,
+	cat_icon TEXT
 );
 
 CREATE TABLE IF NOT EXISTS transaction_types (
 	id SERIAL PRIMARY KEY,
-	type TEXT
+	type TEXT,
+	type_icon TEXT
 );
 
 CREATE TABLE IF NOT EXISTS user_accounts (

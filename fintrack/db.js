@@ -98,5 +98,5 @@ module.exports = {
    */
   users: userModelsObject,
   login: loginModelsObject,
-  account: accountModelsObject,
+  accounts: accountModelsObject,
 };

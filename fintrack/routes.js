@@ -15,7 +15,7 @@ module.exports = (app, allModels) => {
   // require the controller
   const loginControllerCallbacks = require('./controllers/loginController')(allModels);
   const userControllerCallbacks = require('./controllers/userController')(allModels);
-
+  const accountControllerCallbacks = require('./controllers/accountController')(allModels);
 
    // *  =========================================
    // *         Login + Register User Routes
@@ -39,4 +39,12 @@ module.exports = (app, allModels) => {
   app.delete('/home/:username/:txnId/', userControllerCallbacks.delete);
   app.get('/test', userControllerCallbacks.test);
   app.get('/test2', userControllerCallbacks.test2);
+
+
+   // *  =========================================
+   // *   User Account Routes
+   // *  =========================================
+  app.get('/home/:username/accounts', accountControllerCallbacks.displayAccounts);
+  // app.get('/home/:username/accounts/:accId', accountControllerCallbacks.newTxnPage);
+
 }

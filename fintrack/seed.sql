@@ -1,17 +1,22 @@
 -- --categories seed--
--- INSERT INTO categories (cat_name) VALUES ('Food & Drinks');
--- INSERT INTO categories (cat_name) VALUES ('Transport');
--- INSERT INTO categories (cat_name) VALUES ('Shopping');
--- INSERT INTO categories (cat_name) VALUES ('Entertainment');
--- INSERT INTO categories (cat_name) VALUES ('Bills');
--- INSERT INTO categories (cat_name) VALUES ('Medical');
--- INSERT INTO categories (cat_name) VALUES ('Miscellaneous');
--- INSERT INTO categories (cat_name) VALUES ('Invesments');
+-- INSERT INTO categories (cat_name, cat_icon) VALUES ('Food & Drinks', '../assets/food.png');
+-- INSERT INTO categories (cat_name, cat_icon) VALUES ('Transport', '../assets/transport.png');
+-- INSERT INTO categories (cat_name, cat_icon) VALUES ('Shopping', '../assets/shopping.png');
+-- INSERT INTO categories (cat_name, cat_icon) VALUES ('Entertainment', '../assets/entertainment.png');
+-- INSERT INTO categories (cat_name, cat_icon) VALUES ('Travel', '../assets/travel.png');
+-- INSERT INTO categories (cat_name, cat_icon) VALUES ('Bills', '../assets/bill.png');
+-- INSERT INTO categories (cat_name, cat_icon) VALUES ('Medical', '../assets/medical.png');
+-- INSERT INTO categories (cat_name, cat_icon) VALUES ('Invesments', '../assets/wallet.png');
+-- INSERT INTO categories (cat_name, cat_icon) VALUES ('Miscellaneous', '../assets/misc.png');
+
 
 -- --transaction_type seed--
--- INSERT INTO transaction_types (type) VALUES ('Cash');
--- INSERT INTO transaction_types (type) VALUES ('UOB PRVI Card');
--- INSERT INTO transaction_types (type) VALUES ('POSB Everyday Card');
+-- INSERT INTO transaction_types (type, type_icon) VALUES ('Cash', '../../assets/dollar.png');
+-- INSERT INTO transaction_types (type, type_icon) VALUES ('POSB Everyday Card', '../../assets/posb-everyday.png');
+-- INSERT INTO transaction_types (type, type_icon) VALUES ('OCBC 365 Card', '../../assets/ocbc-365.png');
+-- INSERT INTO transaction_types (type, type_icon) VALUES ('Citi PremierMiles Card', '../../assets/citi-pm.png');
+-- INSERT INTO transaction_types (type, type_icon) VALUES ('American Express True Cashback Card', '../../assets/amex.png');
+
 
 
 --user_accounts seed--

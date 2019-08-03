@@ -1,5 +1,5 @@
 var React = require("react");
-const Test = require('./test.jsx');
+const Layout = require('./LayoutCom.jsx');
 
 // https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/slate/bootstrap.min.css
 
@@ -12,37 +12,42 @@ class Dashboard extends React.Component {
     let sum;
 
     if (this.props.transactions === null) {
-        chart = (<p class="text-danger text-center">No Data To Display!</p>);
-        latestTxns = (<p class="text-danger">Add A New Transaction!</p>);
+        chart = (<p class="text-danger text-center">No Data To Display</p>);
+        latestTxns = (<p class="text-danger">No Transactions To Display</p>);
     } else {
-        chart = (<div><canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas><script src="/script.js"></script>
-              <script dangerouslySetInnerHTML={ {__html:
+        chart = (
+            <div className="col-12">
+                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                <script src="/script.js"></script>
+                <script dangerouslySetInnerHTML={ {__html:
                     `var data = ${jData};`
                   }}/>
 
-              <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-              <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script></div>);
-        latestTxns = (<tbody>
-                  {this.props.transactions.rows.map(transaction =>
+                <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+            </div>);
 
-                    <tr>
-
-                      <td>{String(transaction.transaction_date).slice(8,10)} {String(transaction.transaction_date).slice(4,7)} {String(transaction.transaction_date).slice(11,15)}</td>
-                      <td>${transaction.amount}</td>
-                      <td>{transaction.cat_name}</td>
-                      <td>{transaction.type}</td>
-                      <td>{transaction.details}</td>
-                      <td><a href={"/home/"+transaction.username+"/"+transaction.txnid+"/editTransaction"} class="btn btn-secondary btn-sm">EDIT </a></td>
-                    </tr>
-                    )}
-                  </tbody>);
+        latestTxns = (
+            <tbody>
+            {this.props.transactions.rows.map(transaction =>
+                <tr>
+                    <td>{String(transaction.transaction_date).slice(8,10)} {String(transaction.transaction_date).slice(4,7)} {String(transaction.transaction_date).slice(11,15)}</td>
+                    <td>${transaction.amount}</td>
+                    <td><img class="icon" src={transaction.cat_icon} width="30px" height="30px"/>{transaction.cat_name}</td>
+                    <td>{transaction.type}</td>
+                    <td>{transaction.details}</td>
+                    <td><a href={"/home/"+transaction.username+"/"+transaction.txnid+"/editTransaction"} class="btn btn-secondary btn-sm">EDIT </a></td>
+                </tr>
+            )}
+            </tbody>);
 
         sum = (<h2 class="mb-0">${this.props.sum.rows[0].sum}</h2>);
     }
 
-
     return (
-        <html lang="en">
+
+
+         <html lang="en">
           <head>
 
             <meta charset="utf-8"/>
@@ -52,7 +57,9 @@ class Dashboard extends React.Component {
 
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/slate/bootstrap.min.css"/>
 
-            <title>Dashboard</title>
+            <link rel="stylesheet" type="text/css" href="layout.css"/>
+
+            <title>My FinTrack</title>
           </head>
 
           <body>
@@ -65,14 +72,16 @@ class Dashboard extends React.Component {
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                   <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                  <a class="nav-item nav-link" href="#">Accounts</a>
+                  <a class="nav-item nav-link" href={"/home/" + this.props.username[0] + "/accounts"}>Accounts</a>
                   <a class="nav-item nav-link" href="#">Budgets</a>
                   <a class="nav-item nav-link" href="/logout">Logout</a>
                 </div>
               </div>
             </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+
+            <div class="container-fluid">
               <blockquote class="blockquote text-center">
                   <h1 class="mb-0">Welcome {this.props.username[0]}</h1>
               </blockquote>
@@ -99,23 +108,60 @@ class Dashboard extends React.Component {
               </blockquote>
 
 
-              {chart}
+              <div class="row">
+
+                {chart}
+
+              </div>
+
+
+
+
+
+
+                  <h3>Your Accounts</h3>
+                  <div class="table-responsive">
+                    <table class="table table-striped table-sm table-primary">
+                      <thead>
+                        <tr>
+                          <th>Account</th>
+                          <th></th>
+                          <th>Total Spend</th>
+
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {this.props.accounts.map( account =>
+                            <tr>
+                                <td><img width="90px" height="60px" src={account.type_icon}/></td>
+                                <td>{account.type}</td>
+                                <td>${account.sum}</td>
+
+                            </tr>
+                        )}
+                        </tbody>
+
+                    </table>
+                  </div>
+
+
+
+
 
 
 
               <h3>Latest Transactions</h3>
               <div class="table-responsive">
-                <table class="table table-striped table-sm table-primary">
+                <table className="table table-striped table-sm table-primary table-hover">
                   <thead>
                     <tr>
-
                       <th>Date</th>
                       <th>Amount</th>
                       <th>Category</th>
                       <th>Account</th>
                       <th>Description</th>
                       <th>Edit</th>
-
                     </tr>
                   </thead>
 
@@ -123,42 +169,21 @@ class Dashboard extends React.Component {
 
                 </table>
               </div>
-            </main>
+
+
+           </div>
 
 
 
 
-
-
-
-
-
-
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
           </body>
         </html>
 
-
-
     );
   }
 }
 
-// <script src="../script.js"></script>
 module.exports = Dashboard;
-
-// <html>
-//             <div>
-//             This is the dashboard!
-//             {this.props.rows.map(account =>
-//                 <div>
-//                 <h2>Account</h2>
-//                 <p>{account.account_id}</p>
-//                 </div>
-//             )}
-
-//             </div>
-
-//         </html>

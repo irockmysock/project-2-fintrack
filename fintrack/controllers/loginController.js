@@ -81,7 +81,7 @@ module.exports = (db) => {
                   if (error){
                     response.send(error);
                   } else if (result2) {
-                    response.redirect('/login');
+                    response.redirect('/');
                   }
                 }
                 db.account.createInitAcc(createAccCallback, userDetails);
