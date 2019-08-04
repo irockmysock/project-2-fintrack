@@ -9,36 +9,26 @@ module.exports = (db) => {
    * ===========================================
    */
 
-  function hash(string) {
-    let hashedString = sha256( string + SALT );
-    return hashedString;
-  }
+    function hash(string) {
+        let hashedString = sha256( string + SALT );
+        return hashedString;
+    }
 
-  // let test = (request,response) => {
-  //   var callback = function (error,results) {
-  //           if (results===null){
-  //               response.send("NO DATA")
-  //           } else {
-  //               let data = {
-  //                   categories: results.rows
-  //               };
-  //               // response.send(data)
-  //               response.render('pages/test', data);
-  //           }
-  //   }
-  //   db.users.expenseByCat(callback, request.cookies.userid)
-  // }
+    function getCurrentDate(){
 
-  // let test2 = (request,response) => {
-  //   response.render('pages/LayoutCom')
-  // }
+        let newDate = new Date()
+        let date = ('0'+newDate.getDate()).slice(-2);
+        let month = newDate.toLocaleString('default', { month: 'long' });
+        let year = newDate.getFullYear();
+        return `${date} ${month} ${year}`
+    }
 
 
-  let displayAccountPage = (request,response) => {
+    let displayAccountPage = (request,response) => {
         let data = {
                 accounts: null,
-
-                username: [request.params.username]
+                username: [request.params.username],
+                date: getCurrentDate()
             };
         var callback = function (error,results) {
 
@@ -47,7 +37,7 @@ module.exports = (db) => {
                 response.send("No accounts")
 
             } else {
-                if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username)) {
+                if (request.cookies.loggedin === hash(request.params.username)) {
 
                     data.accounts = results;
                     // response.send(results)
@@ -57,190 +47,78 @@ module.exports = (db) => {
                 }
             }
         }
-        db.accounts.queryAllAccounts(callback, request.params.username);
+        db.accounts.queryUserAccounts(callback, request.cookies.userid);
         // db.users.checkAccounts(callback, request.params.username);
     };
 
-    // let displayTransactions = (request,response) => {
-    //     let data = {
-    //         transactions: null,
-    //         sum: null,
-    //         username: [request.params.username],
-    //         categories: null
-    //     };
+    let newAccount = (request,response) => {
+        let data = {
+                accounts: null,
+                username: [request.params.username],
+                date: getCurrentDate()
+            };
+        var callback = function (error,results) {
 
-    //     var callback = function (error,results) {
+            if (results===null){
 
-    //         if (results===null){
+                response.send("No accounts")
 
-    //             response.send("NO DATA")
+            } else {
+                if (request.cookies.loggedin === hash(request.params.username)) {
 
-    //         } else {
-    //             if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username)) {
-
-    //                 data.transactions = results.rows
-
-    //                 response.render('pages/Transactions',data )
-
-    //             } else {
-    //                 response.redirect('/')
-    //             }
-    //         }
-    //     }
-    //     db.users.checkAllTransactions(callback, request.params.username);
-    // };
-
-    // let newTransaction = (request,response) => {
-    //     let data = {
-    //         categories: null,
-    //         types: null,
-    //         username: [request.params.username],
-    //     };
-
-    //     console.log("hashed name is");
-    //     console.log(hash(request.params.username));
-
-    //     var callback = function (error,results) {
-    //         if (results===null){
-    //             response.send("NO DATA")
-    //         } else {
-    //             if (request.cookies.loggedin === hash(request.params.username)) {
-    //                     console.log("THERE ARE RESULTS FROM CATEGORIES")
-    //                     // response.send(results);
-    //                     data.categories = results.rows;
-
-    //                     var callback2 = function (error,results2) {
-    //                         if (results2===null){
-    //                             response.send("NO DATA")
-    //                         } else {
-    //                             console.log("THERE ARE RESULTS FROM TXN TYPES")
-    //                             data.types = results2.rows;
-    //                             // response.send(data)
-    //                             response.render('pages/AddTxn', data)
-    //                         }
-    //                     }
-    //                     db.users.checkAccounts(callback2,request.params.username );
-    //             }  else {
-    //                 response.redirect('/')
-    //             }
-    //         }
-    //     };
-    //     db.users.getCategories(callback);
-    // }
+                    data.accounts = results.rows;
+                    // response.send(results)
+                    response.render('pages/AddAcc', data)
+                } else {
+                    // response.redirect('/')
+                    response.send("username wrong??")
+                }
+            }
+        }
+        db.accounts.queryAllAccounts(callback);
+        // db.users.checkAccounts(callback, request.params.username);
+    };
 
 
-    // let addTransaction = (request,response) => {
-    //     // response.send("ADDED TRANSACTION!")
-    //     var callback = function (error,results) {
+    let addAccount = (request,response) => {
+        let data = {
+                newAccount: null,
+                username: [request.params.username],
+                date: getCurrentDate()
+            };
+        var addAccCallback = function (error,results) {
 
-    //         if (results===null){
+            if (results===null){
 
-    //             response.send("NO DATA")
+                response.send("No accounts")
 
-    //         } else {
-    //             if (request.cookies.loggedin === hash(request.params.username)) {
-    //                 // console.log(request.cookies)
-    //                 console.log("REQUEST params IS")
-    //                 console.log(request.params.username);
-    //                 response.redirect('/home/'+request.params.username )
-    //                 // response.redirect('/')
-    //                 // response.redirect('/user/'+results[0].id);
-    //             } else {
-    //                 response.redirect('/')
-    //             }
-    //         }
-    //     }
-    //     db.users.postTxn(callback, request.body.amount, request.body.transaction_date, request.body.transaction_type, request.body.category_id, request.cookies.userid, request.body.details);
-    // };
+            } else {
+                if (request.cookies.loggedin === hash(request.params.username)) {
 
+                    data.newAccount = results.rows;
+                    // response.send(data)
 
-    // let showTransaction = (request,response) => {
-    //     let data = {
-    //         categories: null,
-    //         types: null,
-    //         username: [request.params.username],
-    //         txnData: null
-    //     };
+                    // response.render('pages/AddAcc', data)
+                    var linkAccCallback = function (error,results) {
 
-    //     var callbackCat = function (error,results) {
-    //         if (results===null){
-    //             response.send("NO DATA")
-    //         } else {
-    //             if (request.cookies.loggedin === hash(request.params.username)) {
-    //                     console.log("THERE ARE RESULTS FROM CATEGORIES")
-    //                     // response.send(results);
-    //                     data.categories = results.rows;
+                        if (results===null){
+                            response.send("Never link accounts");
+                        } else {
+                            // response.send("account LINKED!");
+                            response.redirect('/home/'+request.cookies.username+'/accounts')
+                        }
+                    }
+                    db.accounts.linkAcc(linkAccCallback, request.cookies.userid, data.newAccount[0].id);
 
-    //                     var callbackTxnType = function (error,results2) {
-    //                         if (results===null){
-    //                             response.send("NO DATA")
-    //                         } else {
-    //                             console.log("USER HAS ACCOUNTS")
-    //                             data.types = results2.rows;
-
-    //                             var callbackTxnData = function (error,results3) {
-    //                                 if (results===null){
-    //                                     response.send("NO TXN DATA")
-    //                                 } else {
-    //                                     console.log("USER HAS TXNS");
-    //                                     console.log(results3);
-    //                                     data.txnData = results3;
-    //                                     // response.send(data);
-    //                                     response.render("pages/EditTxn",data)
-    //                                 }
-    //                             }
-    //                             db.users.showTxn(callbackTxnData,request.params.txnId, request.params.username);
-
-    //                         }
-
-    //                     }
-    //                     db.users.checkAccounts(callbackTxnType, request.params.username);
-    //             }  else {
-    //                 response.redirect('/')
-    //             }
-    //         }
-    //     };
-    //     db.users.getCategories(callbackCat);
-    // }
-
-
-    // let editTransaction = (request,response) => {
-    //     // response.send("ADDED TRANSACTION!")
-    //     var callback = function (error,results) {
-
-    //         if (results===null){
-
-    //             response.send("NO DATA")
-
-    //         } else {
-    //             if (request.cookies.loggedin === hash(request.params.username)) {
-    //                 // console.log(request.cookies)
-    //                 console.log("REQUEST params IS")
-    //                 console.log(request.params.username);
-    //                 response.redirect('/home/'+request.params.username )
-    //                 // response.redirect('/')
-    //                 // response.redirect('/user/'+results[0].id);
-    //             } else {
-    //                 response.redirect('/')
-    //             }
-    //         }
-    //     }
-    //     db.users.editTxn(callback, request.body.amount, request.body.transaction_date, request.body.transaction_type, request.body.category_id, request.cookies.userid, request.body.details, request.params.txnId);
-    // };
-
-    // let deleteTransaction = (request,response) => {
-
-    //     var callback = function (error,results) {
-    //         if (error) {
-    //             console.error('query error:', error.stack);
-    //             response.send( 'query error' );
-    //         } else if (request.cookies.loggedin === hash(request.params.username)) {
-    //             // response.redirect('/home/'+request.params.username )
-    //             response.redirect('/');
-    //         }
-    //     }
-    //     db.users.deleteTxn(callback, request.params.txnId, request.cookies.userid);
-    // };
+                } else {
+                    // response.redirect('/')
+                    response.send("username wrong??")
+                }
+            }
+        }
+        db.accounts.addAcc(addAccCallback, request.body.type, request.body.type_icon);
+        // db.users.checkAccounts(callback, request.params.username);
+    };
 
 
 
@@ -252,9 +130,8 @@ module.exports = (db) => {
    */
   return {
     displayAccounts: displayAccountPage,
-    // transactions: displayTransactions,
-    // newTxnPage: newTransaction,
-    // addTxn: addTransaction,
+    newAccPage: newAccount,
+    addAcc: addAccount,
     // editTxnPage: showTransaction,
     // edit: editTransaction,
     // delete: deleteTransaction,

@@ -15,6 +15,15 @@ module.exports = (db) => {
     return hashedString;
   }
 
+  function getCurrentDate(){
+
+    let newDate = new Date()
+    let date = ('0'+newDate.getDate()).slice(-2);
+    let month = newDate.toLocaleString('default', { month: 'long' });
+    let year = newDate.getFullYear();
+    return `${date} ${month} ${year}`
+  }
+
   let test = (request,response) => {
     var callback = function (error,results) {
             if (results===null){
@@ -42,14 +51,26 @@ module.exports = (db) => {
             username: [request.params.username],
             categories: null,
             accounts: null,
+            date: getCurrentDate(),
         };
 
 
         var callback = function (error,results) {
 
             if (results===null){
+                // response.send("NO Transactions!")
+                var accCallback = function (error,results) {
+                    if (results===null){
+                        response.send("NO Accounts")
+                    } else {
 
-                response.render('pages/Dashboard', data)
+                        data.accounts = results.rows;
+                        // response.send(data);
+                        response.render('pages/Dashboard', data)
+                    }
+                }
+                db.users.checkAccounts(accCallback,request.params.username);
+
 
             } else {
                 if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username) && request.params.username === request.cookies.username) {
@@ -59,7 +80,7 @@ module.exports = (db) => {
                     var sumCallback = function (error,results2) {
 
                         if (results===null){
-                            response.send("NO DATA")
+                            response.send("NO sum!")
                         } else {
                             data.sum = results2;
                             // console.log("TYPE IS")
@@ -68,12 +89,12 @@ module.exports = (db) => {
                             // response.render('pages/Dashboard', data)
                             var catCallback = function (error,results3) {
                                     if (results===null){
-                                        response.send("NO DATA")
+                                        response.send("NO cat!")
                                     } else {
                                         data.categories = results3.rows;
                                         // response.send(data)
                                         // response.render('pages/Dashboard', data);
-                                        var accCallback = function (error,results4) {
+                                        var sumAccCallback = function (error,results4) {
                                             if (results===null){
                                                 response.send("NO Accounts")
                                             } else {
@@ -83,7 +104,7 @@ module.exports = (db) => {
                                                 response.render('pages/Dashboard', data)
                                             }
                                         }
-                                        db.accounts.queryAllAccounts(accCallback, request.params.username);
+                                        db.accounts.sumUserAccounts(sumAccCallback, request.params.username);
                                     }
                             }
                             db.users.expenseByCat(catCallback, request.cookies.userid)
@@ -94,7 +115,8 @@ module.exports = (db) => {
                     // response.render('pages/Dashboard',data )
 
                 } else {
-                    response.redirect('/')
+                    // response.redirect('/')
+                    response.send("NO TXN! ")
                 }
             }
         }
@@ -107,14 +129,16 @@ module.exports = (db) => {
             transactions: null,
             monthSum: null,
             username: [request.params.username],
-            categories: null
+            categories: null,
+            date: getCurrentDate(),
         };
 
         var callback = function (error,results) {
 
             if (results===null){
 
-                response.send("NO DATA")
+                // response.send("NO DATA")
+                response.render('pages/Transactions',data )
 
             } else {
                 if (request.params.username === results.rows[0].username && request.cookies.loggedin === hash(request.params.username)) {

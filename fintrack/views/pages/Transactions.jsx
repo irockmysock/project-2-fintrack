@@ -82,7 +82,7 @@ class Transactions extends React.Component {
 
             <div class="container-fluid">
               <blockquote class="blockquote text-center">
-                  <h1 class="mb-0">Welcome {this.props.username[0]}</h1>
+                  <h2>{this.props.date}</h2>
               </blockquote>
 
               <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -113,15 +113,15 @@ class Transactions extends React.Component {
 
               <h2>Transaction History</h2>
               <div class="table-responsive">
-                <table class="table table-striped table-sm">
+                <table className="table table-striped table-sm table-primary table-hover">
                   <thead>
                     <tr>
                       <th>Date</th>
                       <th>Amount</th>
-                      <th colspan="2">Category</th>
+                      <th colSpan="2">Category</th>
                       <th>Account</th>
                       <th>Details</th>
-                      <th class="text-center" colspan="2">Edit/Delete</th>
+                      <th class="text-center" colSpan="2">Edit/Delete</th>
                     </tr>
                   </thead>
 

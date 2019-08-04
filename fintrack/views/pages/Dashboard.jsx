@@ -13,6 +13,7 @@ class Dashboard extends React.Component {
     if (this.props.transactions === null) {
         chart = (<p class="text-danger text-center">No Data To Display</p>);
         latestTxns = (<p class="text-danger">No Transactions To Display</p>);
+        sum = (<h2 class="mb-0">$0</h2>);
     } else {
         chart = (
             <div className="chart-container">
@@ -33,7 +34,7 @@ class Dashboard extends React.Component {
                 <tr>
                     <td>{String(transaction.transaction_date).slice(8,10)} {String(transaction.transaction_date).slice(4,7)} {String(transaction.transaction_date).slice(11,15)}</td>
                     <td>${transaction.amount}</td>
-                    <td><img className="card-icon" src={transaction.type_icon}/></td>
+                    <td><img className="card-thumb" src={transaction.type_icon}/></td>
                     <td><img className="cat-icon" src={transaction.cat_icon}/></td>
                     <td>{transaction.cat_name}</td>
                     <td>{transaction.details}</td>
@@ -88,6 +89,7 @@ class Dashboard extends React.Component {
                     <div className="col-12">
                       <blockquote class="blockquote text-center">
                           <h1 class="mb-0">Welcome {this.props.username[0]}</h1>
+                          <h2>{this.props.date}</h2>
                       </blockquote>
 
                       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -124,22 +126,21 @@ class Dashboard extends React.Component {
                         <table class="table table-striped table-sm table-primary">
                           <thead>
                             <tr>
-                              <th colspan="2">Account</th>
+                              <th colSpan="2">Account</th>
                               <th>Current Month Spend</th>
 
                             </tr>
                           </thead>
 
                           <tbody>
-                            {this.props.accounts.map( account =>
-                                <tr>
-                                    <td><img width="90px" height="60px" src={account.type_icon}/></td>
-                                    <td>{account.type}</td>
-                                    <td>${account.sum}</td>
-
-                                </tr>
-                            )}
-                            </tbody>
+                          {this.props.accounts.map( account =>
+                            <tr>
+                                <td><img className="card-icon" src={account.type_icon}/></td>
+                                <td>{account.type}</td>
+                                <td>${account.sum}</td>
+                            </tr>
+                          )}
+                          </tbody>
 
                         </table>
                       </div>
@@ -157,7 +158,7 @@ class Dashboard extends React.Component {
                             <tr>
                               <th>Date</th>
                               <th>Amount</th>
-                              <th>Account</th>
+                              <th>Acc</th>
                               <th colspan="2">Category</th>
                               <th>Description</th>
                             </tr>

@@ -45,6 +45,8 @@ module.exports = (app, allModels) => {
    // *   User Account Routes
    // *  =========================================
   app.get('/home/:username/accounts', accountControllerCallbacks.displayAccounts);
+  app.get('/home/:username/newAccount', accountControllerCallbacks.newAccPage);
+  app.post('/home/:username/newAccount', accountControllerCallbacks.addAcc)
   // app.get('/home/:username/accounts/:accId', accountControllerCallbacks.newTxnPage);
 
 }

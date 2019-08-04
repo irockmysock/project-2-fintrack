@@ -15,6 +15,30 @@ body {
 }
 
 .card-icon {
-	width: 58px;
-	height: 30px;
+	width: 90px;
+	height: 55px;
+}
+
+.card-thumb {
+	width: 35px;
+	height: 23px;
+}
+
+.card-img {
+	height: 150px;
+	width: 100%;
+	display: block;
+	border-radius: 15px
+}
+
+h3.card-header {
+	font-size: 15px;
+}
+
+p.card-text {
+	font-size: 0.75em;
+}
+
+div.card-body {
+	padding: 0.5em;
 }
