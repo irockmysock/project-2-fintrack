@@ -73,7 +73,8 @@ class Dashboard extends React.Component {
                 <div class="navbar-nav">
                   <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
                   <a class="nav-item nav-link" href={"/home/" + this.props.username[0] + "/accounts"}>Accounts</a>
-                  <a class="nav-item nav-link" href="#">Budgets</a>
+                  <a class="nav-item nav-link" href={"/home/" + this.props.username[0] + "/allTransactions"}>Transactions</a>
+                  <a class="nav-item nav-link disabled" href="#">Budgets</a>
                   <a class="nav-item nav-link" href="/logout">Logout</a>
                 </div>
               </div>
@@ -90,13 +91,10 @@ class Dashboard extends React.Component {
                 <h2>Your Dashboard</h2>
                 <div class="btn-toolbar mb-2 mb-md-0">
                   <div class="btn-group mr-2">
-                  <a href={"/home/" + this.props.username[0] + "/newTransaction"} class="btn btn-sm btn-primary">Add New Transaction </a>
-                  <a href={"/home/" + this.props.username[0] + "/allTransactions"} class="btn btn-sm btn-primary">All Transactions </a>
+                  <a href={"/home/" + this.props.username[0] + "/newTransaction"} class="btn  btn-secondary">Add New Transaction </a>
+
                   </div>
-                  <button type="button" class="btn btn-sm btn-primary dropdown-toggle">
-                    <span data-feather="calendar"></span>
-                    Current month
-                  </button>
+
                 </div>
               </div>
 

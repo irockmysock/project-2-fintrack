@@ -1,35 +1,35 @@
-console.log("loading cat chart");
+console.log("loading month chart");
 
 window.onload = function() {
 
-    let catChart = document.getElementById('myChart').getContext('2d');
-
+    let monthlyChart = document.getElementById('myMonthChart').getContext('2d');
 
     // Global Options
     Chart.defaults.global.defaultFontFamily = 'Lato';
     Chart.defaults.global.defaultFontSize = 18;
     Chart.defaults.global.defaultFontColor = '#777';
 
-    let labelValues = [];
-    data.categories.forEach(label=>{
-        labelValues.push(label.cat_name);
-    });
-    console.log(labelValues);
 
-    let catAmounts = [];
-    data.categories.forEach(cat => {
-        catAmounts.push(cat.sum);
+    let monthLabel = [];
+    monthData.monthSum.forEach(label=>{
+        monthLabel.push(label.month);
     });
-    console.log("CAT AMOUNT")
-    console.log(catAmounts);
+    console.log(monthLabel);
 
-    let catExpenseChart = new Chart(catChart, {
-      type:'pie', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+    let monthAmounts = [];
+    monthData.monthSum.forEach(month => {
+        monthAmounts.push(month.sum);
+    });
+    console.log("MONTH AMOUNT")
+    console.log(monthAmounts);
+
+    let monthExpenseChart = new Chart(monthlyChart, {
+      type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
       data:{
-        labels: labelValues,
+        labels: monthLabel,
         datasets:[{
           label:'amount',
-          data:catAmounts,
+          data: monthAmounts,
           //backgroundColor:'green',
           backgroundColor:[
             'rgba(255, 99, 132, 0.6)',
@@ -74,5 +74,4 @@ window.onload = function() {
       }
     });
 
-
-};
+}

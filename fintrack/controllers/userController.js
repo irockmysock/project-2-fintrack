@@ -105,7 +105,7 @@ module.exports = (db) => {
     let displayTransactions = (request,response) => {
         let data = {
             transactions: null,
-            sum: null,
+            monthSum: null,
             username: [request.params.username],
             categories: null
         };
@@ -121,7 +121,19 @@ module.exports = (db) => {
 
                     data.transactions = results.rows
 
-                    response.render('pages/Transactions',data )
+                    var sumMonthCallback = function (error,results2) {
+
+                        if (results===null){
+                            response.send("NO monthly DATA")
+
+                        } else {
+
+                            data.monthSum = results2.rows;
+                            // response.send(data)
+                            response.render('pages/Transactions',data )
+                        }
+                    }
+                    db.users.sumTxnsByMonth(sumMonthCallback, request.params.username);
 
                 } else {
                     response.redirect('/')
