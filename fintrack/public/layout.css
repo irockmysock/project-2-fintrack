@@ -1,3 +1,20 @@
-/*body {
-	background-color: red;
-}*/
+body {
+	color: white;
+}
+
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 80vh;
+  width: 80vw;
+}
+
+.cat-icon {
+	width: 30px;
+	height: 30px;
+}
+
+.card-icon {
+	width: 58px;
+	height: 30px;
+}

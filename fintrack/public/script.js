@@ -6,9 +6,9 @@ window.onload = function() {
 
 
     // Global Options
-    Chart.defaults.global.defaultFontFamily = 'Lato';
-    Chart.defaults.global.defaultFontSize = 18;
-    Chart.defaults.global.defaultFontColor = '#777';
+    // Chart.defaults.global.defaultFontFamily = 'Lato';
+    Chart.defaults.global.defaultFontSize = 14;
+    Chart.defaults.global.defaultFontColor = 'rgba(255,99,132,1)';
 
     let labelValues = [];
     data.categories.forEach(label=>{
@@ -31,33 +31,40 @@ window.onload = function() {
           label:'amount',
           data:catAmounts,
           //backgroundColor:'green',
-          backgroundColor:[
-            'rgba(255, 99, 132, 0.6)',
-            'rgba(54, 162, 235, 0.6)',
-            'rgba(255, 206, 86, 0.6)',
-            'rgba(75, 192, 192, 0.6)',
-            'rgba(153, 102, 255, 0.6)',
-            'rgba(255, 159, 64, 0.6)',
-            'rgba(255, 99, 132, 0.6)',
-            'rgba(150, 90, 132, 0.6)'
-          ],
+          // backgroundColor:[
+          //   'rgba(255, 99, 132, 0.6)',
+          //   'rgba(54, 162, 235, 0.6)',
+          //   'rgba(255, 206, 86, 0.6)',
+          //   'rgba(75, 192, 192, 0.6)',
+          //   'rgba(153, 102, 255, 0.6)',
+          //   'rgba(255, 159, 64, 0.6)',
+          //   'rgba(255, 99, 132, 0.6)',
+          //   'rgba(150, 90, 132, 0.6)'
+          // ],
           borderWidth:1,
-          borderColor:'#777',
+          borderColor: "rgba(255,99,132,1)",
           hoverBorderWidth:3,
-          hoverBorderColor:'#000'
+          hoverBackgroundColor:"rgba(255,99,132,0.4)",
+          hoverBorderColor:"rgba(255,99,132,1)"
         }]
       },
       options:{
+        maintainAspectRatio: false,
+        plugins: {
+            colorschemes: {
+                scheme: 'brewer.SetOne9'
+            }
+        },
         title:{
-          display:true,
-          text:'Expense breakdown by category',
+          display:false,
+          text:'Category Spend',
           fontSize:25
         },
         legend:{
           display:true,
           position:'right',
           labels:{
-            fontColor:'#000'
+            fontColor:'rgba(255,99,132,1)'
           }
         },
         layout:{

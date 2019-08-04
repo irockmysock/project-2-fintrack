@@ -270,7 +270,7 @@ module.exports = (db) => {
                     // console.log(request.cookies)
                     console.log("REQUEST params IS")
                     console.log(request.params.username);
-                    response.redirect('/home/'+request.params.username )
+                    response.redirect('/home/'+ request.params.username + '/allTransactions')
                     // response.redirect('/')
                     // response.redirect('/user/'+results[0].id);
                 } else {

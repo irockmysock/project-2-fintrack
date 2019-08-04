@@ -263,7 +263,7 @@ module.exports = (dbPoolInstance) => {
 
   let sumTxnsByMonth = (callback,username) => {
 
-    const query = "SELECT SUM(amount), to_char(transaction_date, 'yyyy-MM') as month FROM transactions INNER JOIN users ON (transactions.user_id = users.id) WHERE username=$1 GROUP BY month";
+    const query = "SELECT SUM(amount), to_char(transaction_date, 'MM-YYYY') as month FROM transactions INNER JOIN users ON (transactions.user_id = users.id) WHERE username=$1 GROUP BY month";
 
     let values = [username];
 
