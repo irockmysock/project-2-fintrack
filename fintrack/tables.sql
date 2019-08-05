@@ -5,13 +5,14 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS transactions (
-	id SERIAL PRIMARY KEY,
+	txnid SERIAL PRIMARY KEY,
 	amount NUMERIC,
 	transaction_date DATE,
 	transaction_type INT,
 	category_id INT,
 	user_id INT,
-	details TEXT
+	details TEXT,
+	receipt_url TEXT
 
 );
 
@@ -31,5 +32,5 @@ CREATE TABLE IF NOT EXISTS user_accounts (
 	id SERIAL PRIMARY KEY,
 	user_id INT,
 	account_id INT,
-	billing_date DATE
+	billing_date TEXT
 );

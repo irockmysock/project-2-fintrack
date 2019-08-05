@@ -35,6 +35,7 @@ class Transactions extends React.Component {
                     <td>{transaction.cat_name}</td>
                     <td>{transaction.type}</td>
                     <td>{transaction.details}</td>
+                    <td><a href={transaction.receipt_url}><img className="cat-icon" src="/assets/receipt.png"/></a></td>
                     <td><a href={"/home/"+transaction.username+"/"+transaction.txnid+"/editTransaction"} class="btn btn-secondary btn-sm btn-success">EDIT </a></td>
                     <td><form method="POST" action={"/home/"+transaction.username+"/"+transaction.txnid+'/?_method=DELETE'}>
                             <button type="submit" class="btn btn-primary btn-sm btn-danger">DELETE</button>
@@ -128,6 +129,7 @@ class Transactions extends React.Component {
                       <th colSpan="2">Category</th>
                       <th>Account</th>
                       <th>Details</th>
+                      <th>Receipt</th>
                       <th class="text-center" colSpan="2">Actions</th>
                     </tr>
                   </thead>

@@ -38,6 +38,7 @@ class Dashboard extends React.Component {
                     <td><img className="cat-icon" src={transaction.cat_icon}/></td>
                     <td>{transaction.cat_name}</td>
                     <td>{transaction.details}</td>
+                    <td><a href={transaction.receipt_url}><img className="cat-icon" src="/assets/receipt.png"/></a></td>
                 </tr>
             )}
             </tbody>);
@@ -169,6 +170,7 @@ class Dashboard extends React.Component {
                               <th>Acc</th>
                               <th colspan="2">Category</th>
                               <th>Description</th>
+                              <th>Receipt</th>
                             </tr>
                           </thead>
 

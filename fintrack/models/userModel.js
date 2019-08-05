@@ -121,11 +121,11 @@ module.exports = (dbPoolInstance) => {
     })
   }
 
-  let postTxn = (callback, amount, transaction_date, transaction_type, category_id, user_id, details) => {
+  let postTxn = (amount, transaction_date, transaction_type, category_id, user_id, details, receipt, callback) => {
 
-    const query = "INSERT INTO transactions (amount, transaction_date, transaction_type, category_id, user_id, details) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *";
+    const query = "INSERT INTO transactions (amount, transaction_date, transaction_type, category_id, user_id, details,receipt_url) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *";
 
-    let values = [amount, transaction_date, transaction_type, category_id, user_id, details]
+    let values = [amount, transaction_date, transaction_type, category_id, user_id, details, receipt]
 
     dbPoolInstance.query(query, values, (error, queryResult) => {
         if( error ){

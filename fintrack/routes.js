@@ -1,3 +1,7 @@
+var multer = require('multer');
+var upload = multer({ dest: './public/uploads/' });
+
+
 module.exports = (app, allModels) => {
   /*
    *  =========================================
@@ -30,7 +34,7 @@ module.exports = (app, allModels) => {
    // *   User Transaction Routes
    // *  =========================================
   app.get('/home/:username/newTransaction', userControllerCallbacks.newTxnPage);
-  app.post('/home/:username/newTransaction',userControllerCallbacks.addTxn);
+  app.post('/home/:username/newTransaction',upload.single('receipt'), userControllerCallbacks.addTxn);
   app.get('/home/:username/allTransactions', userControllerCallbacks.transactions);
   app.get('/home/:username/:txnId/editTransaction', userControllerCallbacks.editTxnPage);
   app.put('/home/:username/:txnId/', userControllerCallbacks.edit);

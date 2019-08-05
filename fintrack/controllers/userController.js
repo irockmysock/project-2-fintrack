@@ -1,6 +1,12 @@
 const sha256=require('js-sha256');
+var cloudinary = require('cloudinary');
 const SALT = 'SAVE FinTrack MONEY!';
 
+cloudinary.config({
+    cloud_name: 'irockmysock',
+    api_key: '933467472654765',
+    api_secret: 'QHHJj_0tTrWQX_CoeuQVgtIdgDM'
+});
 
 module.exports = (db) => {
 
@@ -207,28 +213,59 @@ module.exports = (db) => {
 
 
     let addTransaction = (request,response) => {
-        // response.send("ADDED TRANSACTION!")
-        var callback = function (error,results) {
+        console.log("REQ FILE IS")
+        console.log(request.file)
+        if (request.cookies.loggedin === hash(request.params.username) && request.file !== undefined) {
+            cloudinary.uploader.upload(request.file.path, function(photoResult) {
 
-            if (results===null){
+                db.users.postTxn(request.body.amount, request.body.transaction_date, request.body.transaction_type, request.body.category_id, request.cookies.userid, request.body.details, photoResult.url, (error, results) => {
 
-                response.send("NO DATA")
+                    if (results===null){
+                        response.send("NO DATA")
+                    } else {
+                        response.redirect('/home/'+request.params.username )
+                        // response.send(request.file);
+                    }
+                })
+            });
+        } else if (request.cookies.loggedin === hash(request.params.username) && request.file === undefined) {
+            console.log("HEREEE")
 
-            } else {
-                if (request.cookies.loggedin === hash(request.params.username)) {
-                    // console.log(request.cookies)
-                    console.log("REQUEST params IS")
-                    console.log(request.params.username);
-                    response.redirect('/home/'+request.params.username )
-                    // response.redirect('/')
-                    // response.redirect('/user/'+results[0].id);
-                } else {
-                    response.redirect('/')
-                }
-            }
+            db.users.postTxn(request.body.amount, request.body.transaction_date, request.body.transaction_type, request.body.category_id, request.cookies.userid, request.body.details, null, (error, results) => {
+
+                    if (results===null){
+                        response.send("NO DATA")
+                    } else {
+                        response.redirect('/home/'+request.params.username )
+                        // response.send(request.file);
+                    }
+            })
         }
-        db.users.postTxn(callback, request.body.amount, request.body.transaction_date, request.body.transaction_type, request.body.category_id, request.cookies.userid, request.body.details);
-    };
+    }
+
+
+
+
+    //     var callback = function (error,results) {
+
+    //         if (results===null){
+    //             response.send("NO DATA")
+    //         } else {
+    //             if (request.cookies.loggedin === hash(request.params.username)) {
+    //                 // response.redirect('/home/'+request.params.username )
+    //                 console.log(request.file)
+    //                 // response.send(request.file);
+    //                 cloudinary.uploader.upload(request.file.path, function(result) {
+    //                     response.send(result);
+    //                     data.receipt = result.url;
+    //                 })
+    //             } else {
+    //                 response.redirect('/')
+    //             }
+    //         }
+    //     }
+    //     db.users.postTxn(callback, request.body.amount, request.body.transaction_date, request.body.transaction_type, request.body.category_id, request.cookies.userid, request.body.details, data.receipt);
+    // };
 
 
     let showTransaction = (request,response) => {

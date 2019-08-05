@@ -68,7 +68,7 @@ module.exports = (db) => {
           if (error){
             response.send(error);
           } else if (result) {
-                let username = request.cookies.username;
+                let username = request.body.username;
                 let sessionToken = hash(username);
 
                 response.cookie('loggedin', sessionToken);
@@ -84,7 +84,7 @@ module.exports = (db) => {
                     response.redirect('/');
                   }
                 }
-                db.account.createInitAcc(createAccCallback, userDetails);
+                db.accounts.createInitAcc(createAccCallback, userDetails);
 
           } else {
             let data = ["usernameExist"]
@@ -98,7 +98,7 @@ module.exports = (db) => {
                     username: request.body.username,
                     password: hashedPW,
                     userid: null
-                }
+        }
         db.login.createUser(callback,userDetails);
   };
 

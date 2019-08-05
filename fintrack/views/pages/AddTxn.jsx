@@ -46,7 +46,7 @@ class AddTxn extends React.Component {
                     <h1 className="text-info">Add New Transaction</h1>
                 </div>
 
-                <form method="POST" action={"/home/"+this.props.username[0]+"/newTransaction"}>
+                <form enctype="multipart/form-data" method="POST" action={"/home/"+this.props.username[0]+"/newTransaction"}>
 
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Amount</label>
@@ -83,7 +83,7 @@ class AddTxn extends React.Component {
 
                   <div class="form-group">
                     <label class="cameraButton">Upload Receipt
-                    <input type="file" id="upload" style={uploadStyle} accept="image/*;capture=camera" name="Picture"/></label>
+                    <input type="file" id="upload" style={uploadStyle} accept="image/*;capture=camera" name="receipt"/></label>
                   </div>
 
                   <div className="text-center">

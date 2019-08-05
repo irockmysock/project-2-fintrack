@@ -34,7 +34,7 @@ module.exports = (db) => {
 
             if (results===null){
 
-                response.send("No accounts")
+                response.send("No accounts found")
 
             } else {
                 if (request.cookies.loggedin === hash(request.params.username)) {
@@ -131,7 +131,7 @@ module.exports = (db) => {
 
             if (results===null){
 
-                response.send("No accounts")
+                response.send("No transactions found")
 
             } else {
                 if (request.cookies.loggedin === hash(request.params.username)) {
@@ -144,7 +144,7 @@ module.exports = (db) => {
                 }
             }
         }
-        db.accounts.queryAccTxns(callback, request.cookies.userid, request.params.accId);
+        db.accounts.queryAccTxns(callback, request.cookies.username, request.params.accId);
         // db.users.checkAccounts(callback, request.params.username);
     };
 

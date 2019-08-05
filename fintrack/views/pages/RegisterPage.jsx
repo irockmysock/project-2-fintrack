@@ -5,7 +5,8 @@ class Register extends React.Component {
 
     let taken;
     if (this.props.rows.length === 1) {
-        taken = (<p>Username has been taken. Please choose another username</p>);
+        taken = (
+            <p>Username has been taken. Please choose another username</p>);
     }
 
     return (
@@ -32,13 +33,15 @@ class Register extends React.Component {
                     <div class="card">
                         <div class="card-title">
                             <h2><img src="/assets/logo.png" className="logo"/>FinTrack</h2>
-
                         </div>
-                        {taken}
+
                         <div class="card-header">
                             <h3>Create New Account</h3>
-
+                            <div class="d-flex justify-content social_icon">
+                            {taken}
+                            </div>
                         </div>
+
                         <div class="card-body">
                             <form className="register-form" method="POST" action="/register">
                                 <div class="input-group form-group">

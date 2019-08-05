@@ -74,7 +74,7 @@ class Accounts extends React.Component {
                           <a href={"/home/"+this.props.username[0]+'/accounts/'+account.account_id}><img className="card-img" src={account.type_icon}/></a>
 
                           <div class="card-body">
-                            <p class="card-text">Billing Date: 20th of month</p>
+                            <p class="card-text">Billing Date: {account.billing_date}</p>
                           </div>
 
                           <div class="card-body">

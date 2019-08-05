@@ -26,6 +26,7 @@ class Login extends React.Component {
 
                 <link rel="stylesheet" type="text/css" href="style.css"/>
             </head>
+
             <body>
             <div class="container">
 
@@ -57,20 +58,19 @@ class Login extends React.Component {
                                     </div>
                                     <input type="password" class="form-control" placeholder="Password" name="password"/>
                                 </div>
-                                <div class="row align-items-center remember">
 
-                                </div>
                                 <div class="form-group">
                                     <input type="submit" value="Login" class="btn float-right login_btn"/>
                                 </div>
                             </form>
                         </div>
+
                         <div class="card-footer">
                             <div class="d-flex justify-content-center links">
                                 Don't have an account?<a href="/register">Sign Up</a>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
             </div>
