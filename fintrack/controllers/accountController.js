@@ -160,10 +160,6 @@ module.exports = (db) => {
     newAccPage: newAccount,
     addAcc: addAccount,
     accTxns: displayAccTxns,
-    // editTxnPage: showTransaction,
-    // edit: editTransaction,
-    // delete: deleteTransaction,
-    // test2:test2,
   };
 
 }
