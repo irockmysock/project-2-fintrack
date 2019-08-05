@@ -8,7 +8,7 @@ window.onload = function() {
     // Global Options
     // Chart.defaults.global.defaultFontFamily = 'Lato';
     Chart.defaults.global.defaultFontSize = 14;
-    Chart.defaults.global.defaultFontColor = 'rgba(255,99,132,1)';
+    Chart.defaults.global.defaultFontColor = 'white';
 
 
     let labelValues = [];
@@ -43,7 +43,7 @@ window.onload = function() {
           //   'rgba(150, 90, 132, 0.6)'
           // ],
           borderWidth:1,
-          borderColor: "rgba(255,99,132,1)",
+          borderColor: "white",
           hoverBorderWidth:3,
           hoverBackgroundColor:"rgba(255,99,132,0.4)",
           hoverBorderColor:"rgba(255,99,132,1)"

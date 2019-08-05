@@ -1,6 +1,4 @@
 module.exports = (app, allModels) => {
-
-
   /*
    *  =========================================
    *  =========================================
@@ -26,11 +24,11 @@ module.exports = (app, allModels) => {
   app.get('/register', loginControllerCallbacks.register);
   app.post('/register', loginControllerCallbacks.createUser);
   app.get('/logout', loginControllerCallbacks.logout);
+  app.get('/home/:username', userControllerCallbacks.home);
 
    // *  =========================================
-   // *   User Homepage and Transaction Routes
+   // *   User Transaction Routes
    // *  =========================================
-  app.get('/home/:username', userControllerCallbacks.home);
   app.get('/home/:username/newTransaction', userControllerCallbacks.newTxnPage);
   app.post('/home/:username/newTransaction',userControllerCallbacks.addTxn);
   app.get('/home/:username/allTransactions', userControllerCallbacks.transactions);
@@ -40,7 +38,6 @@ module.exports = (app, allModels) => {
   app.get('/test', userControllerCallbacks.test);
   app.get('/test2', userControllerCallbacks.test2);
 
-
    // *  =========================================
    // *   User Account Routes
    // *  =========================================
@@ -48,6 +45,5 @@ module.exports = (app, allModels) => {
   app.get('/home/:username/newAccount', accountControllerCallbacks.newAccPage);
   app.post('/home/:username/newAccount', accountControllerCallbacks.addAcc);
   app.get('/home/:username/accounts/:accId', accountControllerCallbacks.accTxns);
-  // app.get('/home/:username/accounts/:accId', accountControllerCallbacks.newTxnPage);
 
 }

@@ -143,7 +143,7 @@ class Dashboard extends React.Component {
                           <tbody>
                           {this.props.accounts.map( account =>
                             <tr>
-                                <td><img className="card-icon" src={account.type_icon}/></td>
+                                <td><a href={"/home/" + this.props.username[0] + "/accounts/"+ account.transaction_type}><img className="card-icon" src={account.type_icon}/></a></td>
                                 <td>{account.type}</td>
                                 <td>${account.sum}</td>
                             </tr>

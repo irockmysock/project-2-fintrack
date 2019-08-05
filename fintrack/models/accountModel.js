@@ -149,7 +149,7 @@ module.exports = (dbPoolInstance) => {
 
   let queryAccTxns = (callback, userid, accountid) => {
 
-    const query = "SELECT * FROM transactions INNER JOIN transaction_types ON (transactions.transaction_type=transaction_types.id) INNER JOIN categories ON (transactions.category_id=categories.id) WHERE user_id=$1 AND transaction_type=$2;";
+    const query = "SELECT * FROM transactions INNER JOIN transaction_types ON (transactions.transaction_type=transaction_types.id) INNER JOIN categories ON (transactions.category_id=categories.id) INNER JOIN users ON (users.id=transactions.user_id) WHERE user_id=$1 AND transaction_type=$2;";
     let values = [userid, accountid];
 
     dbPoolInstance.query(query, values, (error, queryResult) => {

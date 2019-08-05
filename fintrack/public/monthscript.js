@@ -40,7 +40,7 @@ window.onload = function() {
             "rgba(255,255,77,1)"
           ],
           borderWidth:1,
-          borderColor: "rgba(255,99,132,1)",
+          borderColor: "white",
           hoverBorderWidth:3,
           hoverBackgroundColor:"rgba(255,99,132,0.4)",
           hoverBorderColor:"rgba(255,99,132,1)"
