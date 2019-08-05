@@ -31,7 +31,8 @@ class Register extends React.Component {
                 <div class="d-flex justify-content-center h-100">
                     <div class="card">
                         <div class="card-title">
-                            <h2>My FinTrack</h2>
+                            <h2><img src="/assets/logo.png" className="logo"/>FinTrack</h2>
+
                         </div>
                         {taken}
                         <div class="card-header">
@@ -57,6 +58,12 @@ class Register extends React.Component {
                                     <input type="submit" value="Create Account" class="btn float-right login_btn"/>
                                 </div>
                             </form>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-center links">
+                                Already have an account?<a href="/login">Sign In</a>
+                            </div>
                         </div>
 
                     </div>

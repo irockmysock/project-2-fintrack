@@ -66,10 +66,13 @@ class Dashboard extends React.Component {
           <body>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <a class="navbar-brand" href="/">My FinTrack</a>
+              <a class="navbar-brand" href="/">
+              <img src="/assets/logo.png" className="logo"/>FinTrack</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
+
+
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                   <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
@@ -88,14 +91,19 @@ class Dashboard extends React.Component {
                 <div className="row">
                     <div className="col-12">
                       <blockquote class="blockquote text-center">
-                          <h1 class="mb-0">Welcome {this.props.username[0]}</h1>
-                          <h2>{this.props.date}</h2>
+
+                          <h1>{this.props.date}</h1>
                       </blockquote>
 
                       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h2>Your Dashboard</h2>
                         <div class="btn-toolbar mb-2 mb-md-0">
                           <div class="btn-group mr-2">
+                          <a href={"/"} class="btn btn-primary">Dashboard</a>
+                          <a href={"/home/" + this.props.username[0] + "/allTransactions"} class="btn btn-primary">All Transactions</a>
+                          <a href={"/home/" + this.props.username[0] + "/accounts"} class="btn btn-primary">All Accounts</a>
+                          </div>
+                          <div>
                           <a href={"/home/" + this.props.username[0] + "/newTransaction"} class="btn  btn-secondary btn-info">Add New Transaction </a>
                           </div>
                         </div>
@@ -110,18 +118,18 @@ class Dashboard extends React.Component {
 
 
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-md-12 col-sm-12">
                         <blockquote class="blockquote text-center">
                             <h3>Category Spend</h3>
 
                         </blockquote>
                         {chart}
                     </div>
-                </div>
 
-                <div className="row">
-                    <div className="col-12">
-                      <h3>Your Accounts</h3>
+
+
+                    <div className="col-md-12 col-sm-12">
+                      <h3>Your Accounts <a href={"/home/" + this.props.username[0] + "/accounts"} class="btn btn-sm btn-primary">All Accounts</a></h3>
                       <div class="table-responsive">
                         <table class="table table-striped table-sm table-primary">
                           <thead>
@@ -151,7 +159,7 @@ class Dashboard extends React.Component {
 
                 <div className="row">
                     <div className="col-12">
-                      <h3>Latest Transactions</h3>
+                      <h3>Latest Transactions <a href={"/home/" + this.props.username[0] + "/allTransactions"} class="btn btn-sm btn-primary">All Transactions</a></h3>
                       <div class="table-responsive">
                         <table className="table table-striped table-sm table-primary table-hover">
                           <thead>

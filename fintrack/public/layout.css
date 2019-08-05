@@ -5,8 +5,14 @@ body {
 .chart-container {
   position: relative;
   margin: auto;
-  height: 80vh;
-  width: 80vw;
+  height: 50vh;
+  width: 65vw;
+}
+
+.logo {
+	width: 40px;
+	height: 30px;
+	padding: 0 5px;
 }
 
 .cat-icon {
@@ -42,3 +48,16 @@ p.card-text {
 div.card-body {
 	padding: 0.5em;
 }
+
+div h1 {
+	padding: 10px;
+}
+
+blockquote h3 {
+	/*color:rgba(255,100,132,1);*/
+}
+
+
+/*#myChart {
+	width:50%;
+}*/

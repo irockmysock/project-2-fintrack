@@ -41,7 +41,7 @@ module.exports = (db) => {
 
                     data.accounts = results;
                     // response.send(results)
-                    response.render('pages/AccountPage', data)
+                    response.render('pages/allAccountsPage', data)
                 } else {
                     response.redirect('/')
                 }
@@ -121,6 +121,33 @@ module.exports = (db) => {
     };
 
 
+    let displayAccTxns = (request,response) => {
+        let data = {
+                transactions: null,
+                username: [request.params.username],
+                date: getCurrentDate()
+            };
+        var callback = function (error,results) {
+
+            if (results===null){
+
+                response.send("No accounts")
+
+            } else {
+                if (request.cookies.loggedin === hash(request.params.username)) {
+
+                    data.transactions = results;
+                    // response.send(results)
+                    response.render('pages/AccTransactions', data)
+                } else {
+                    response.redirect('/')
+                }
+            }
+        }
+        db.accounts.queryAccTxns(callback, request.cookies.userid, request.params.accId);
+        // db.users.checkAccounts(callback, request.params.username);
+    };
+
 
 
   /**
@@ -132,6 +159,7 @@ module.exports = (db) => {
     displayAccounts: displayAccountPage,
     newAccPage: newAccount,
     addAcc: addAccount,
+    accTxns: displayAccTxns,
     // editTxnPage: showTransaction,
     // edit: editTransaction,
     // delete: deleteTransaction,

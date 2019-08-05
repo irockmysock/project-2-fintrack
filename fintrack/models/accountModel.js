@@ -147,6 +147,31 @@ module.exports = (dbPoolInstance) => {
   }
 
 
+  let queryAccTxns = (callback, userid, accountid) => {
+
+    const query = "SELECT * FROM transactions INNER JOIN transaction_types ON (transactions.transaction_type=transaction_types.id) INNER JOIN categories ON (transactions.category_id=categories.id) WHERE user_id=$1 AND transaction_type=$2;";
+    let values = [userid, accountid];
+
+    dbPoolInstance.query(query, values, (error, queryResult) => {
+
+        if( error ){
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+        } else if (queryResult.rows[0] === undefined) {
+            callback(null, null)
+        // invoke callback function with results after query has executed
+        } else if( queryResult.rows.length > 0 ){
+            callback(null, queryResult)
+        } else{
+            callback(null, null);
+        }
+    })
+  }
+
+
+
+
 
   return {
     createInitAcc,
@@ -155,6 +180,7 @@ module.exports = (dbPoolInstance) => {
     sumUserAccounts,
     addAcc,
     linkAcc,
+    queryAccTxns,
   };
 
 };

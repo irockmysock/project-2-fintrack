@@ -33,7 +33,7 @@ class Login extends React.Component {
 
                     <div class="card">
                         <div class="card-title">
-                            <h2>My FinTrack</h2>
+                            <h2><img src="/assets/logo.png" className="logo"/>FinTrack</h2>
                         </div>
 
                         <div class="card-header">
@@ -69,9 +69,7 @@ class Login extends React.Component {
                             <div class="d-flex justify-content-center links">
                                 Don't have an account?<a href="/register">Sign Up</a>
                             </div>
-                            <div class="d-flex justify-content-center">
-                                <a href="#">Forgot your password?</a>
-                            </div>
+
                         </div>
                     </div>
                 </div>

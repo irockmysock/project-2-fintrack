@@ -23,7 +23,8 @@ class Accounts extends React.Component {
           <body>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <a class="navbar-brand" href="/">My FinTrack</a>
+              <a class="navbar-brand" href="/">
+              <img src="/assets/logo.png" className="logo"/>FinTrack</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -44,15 +45,20 @@ class Accounts extends React.Component {
                 <div className="row">
                     <div className="col-12">
                       <blockquote class="blockquote text-center">
-                          <h2>{this.props.date}</h2>
+                          <h1>{this.props.date}</h1>
                       </blockquote>
 
                       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h2>Your Accounts</h2>
                         <div class="btn-toolbar mb-2 mb-md-0">
-                          <div class="btn-group mr-2">
-                          <a href={"/home/" + this.props.username[0] + "/newAccount"} class="btn  btn-secondary btn-info">Add New Account</a>
-                          </div>
+                            <div class="btn-group mr-2">
+                                <a href={"/"} class="btn btn-primary">Dashboard</a>
+                                <a href={"/home/" + this.props.username[0] + "/allTransactions"} class="btn btn-primary">All Transactions</a>
+                                <a href={"/home/" + this.props.username[0] + "/accounts"} class="btn btn-primary">All Accounts</a>
+                            </div>
+                            <div>
+                                <a href={"/home/" + this.props.username[0] + "/newAccount"} class="btn  btn-secondary btn-info">Add New Account</a>
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -65,7 +71,7 @@ class Accounts extends React.Component {
                         <div class="card mb-3">
                           <h3 class="card-header">{account.type}</h3>
 
-                          <img className="card-img" src={account.type_icon}/>
+                          <a href={"/home/"+this.props.username[0]+'/accounts/'+account.account_id}><img className="card-img" src={account.type_icon}/></a>
 
                           <div class="card-body">
                             <p class="card-text">Billing Date: 20th of month</p>

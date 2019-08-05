@@ -7,7 +7,7 @@ window.onload = function() {
     // Global Options
     // Chart.defaults.global.defaultFontFamily = 'Lato';
     Chart.defaults.global.defaultFontSize = 18;
-    Chart.defaults.global.defaultFontColor = 'rgba(255,99,132,1)';
+    Chart.defaults.global.defaultFontColor = 'white';
 
 
     let monthLabel = [];
@@ -32,7 +32,12 @@ window.onload = function() {
           data: monthAmounts,
           //backgroundColor:'green',
           backgroundColor:[
-            "rgba(255,99,132,0.2)"
+            "rgba(228,29,33,1)",
+            "rgba(55,126,182,1)",
+            "rgba(78,174,81,1)",
+            "rgba(151,79,161,1)",
+            "rgba(255,128,30,1)",
+            "rgba(255,255,77,1)"
           ],
           borderWidth:1,
           borderColor: "rgba(255,99,132,1)",
@@ -43,29 +48,34 @@ window.onload = function() {
       },
       options:{
         maintainAspectRatio: false,
-
+        plugins: {
+            colorschemes: {
+                scheme: 'brewer.SetOne9'
+            }
+        },
         title:{
-          display:true,
+          display:false,
           text:'Monthly Spend',
           fontSize:25,
-          fontColor:"rgba(255,99,132,1)"
+          // fontColor:"rgba(255,99,132,1)"
         },
 
-        scales: {
-            yAxes: [{
-              stacked: true,
-              gridLines: {
-                display: true,
-                color: "rgba(255,99,132,0.2)"
-              },
-            }],
-        },
+        // scales: {
+        //     yAxes: [{
+        //       stacked: true,
+        //       gridLines: {
+        //         display: true,
+        //         color: "rgba(255,99,132,0.2)"
+        //       },
+        //     }],
+        // },
 
         legend:{
           display:false,
           position:'right',
           labels:{
-            fontColor:"rgba(255,99,132,1)"
+            // fontColor:"rgba(255,99,132,1)"
+            fontColor:"white"
           }
         },
         layout:{

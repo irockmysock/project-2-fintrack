@@ -1,33 +1,18 @@
 var React = require("react");
 const Layout = require('./LayoutCom.jsx');
 
-class Transactions extends React.Component {
+class AccountTxns extends React.Component {
   render() {
-    let jData = JSON.stringify(this.props);
 
-    let monthChart;
-    let allTxns;
+    let accTxns;
 
-    if (this.props.transactions === null) {
-        monthChart = (<p class="text-danger text-center">No Data To Display</p>);
-        allTxns = (<p class="text-danger">No Transactions To Display</p>);
+    if (this.props.transactions.rows === null) {
+        accTxns = (<p class="text-danger">No Transactions To Display</p>);
     } else {
-        monthChart = (
-            <div className="chart-container">
-                <canvas id="myMonthChart"></canvas>
-                <script src="/monthscript.js"></script>
-                <script dangerouslySetInnerHTML={ {__html:
-                    `var monthData = ${jData};`
-                  }}/>
 
-                <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
-            </div>);
-
-        allTxns = (
+        accTxns = (
             <tbody>
-            {this.props.transactions.map(transaction =>
+            {this.props.transactions.rows.map(transaction =>
                 <tr>
                     <td>{String(transaction.transaction_date).slice(8,10)} {String(transaction.transaction_date).slice(4,7)} {String(transaction.transaction_date).slice(11,15)}</td>
                     <td>${transaction.amount}</td>
@@ -42,8 +27,6 @@ class Transactions extends React.Component {
                 </tr>
             )}
             </tbody>);
-
-
     }
 
     return (
@@ -73,7 +56,7 @@ class Transactions extends React.Component {
               </button>
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                  <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
                   <a class="nav-item nav-link" href={"/home/" + this.props.username[0] + "/accounts"}>Accounts</a>
                   <a class="nav-item nav-link" href={"/home/" + this.props.username[0] + "/allTransactions"}>Transactions</a>
                   <a class="nav-item nav-link disabled" href="#">Budgets</a>
@@ -82,62 +65,65 @@ class Transactions extends React.Component {
               </div>
             </nav>
 
+
             <div class="container-fluid">
+
                 <div className="row">
                     <div className="col-12">
-                        <blockquote class="blockquote text-center">
-                            <h1>{this.props.date}</h1>
-                        </blockquote>
+                      <blockquote class="blockquote text-center">
+                          <h1>{this.props.date}</h1>
+                      </blockquote>
 
-                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                            <h2>Your Transactions</h2>
-                            <div class="btn-toolbar mb-2 mb-md-0">
-                                <div class="btn-group mr-2">
-                                    <a href={"/"} class="btn btn-primary">Dashboard</a>
-                                    <a href={"/home/" + this.props.username[0] + "/allTransactions"} class="btn btn-primary">All Transactions</a>
-                                    <a href={"/home/" + this.props.username[0] + "/accounts"} class="btn btn-primary">All Accounts</a>
-                                </div>
-                                <div>
-                                    <a href={"/home/" + this.props.username[0] + "/newTransaction"} class="btn  btn-secondary btn-info">Add New Transaction </a>
-                                </div>
+                      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h2>Your Accounts</h2>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group mr-2">
+                                <a href={"/"} class="btn btn-primary">Dashboard</a>
+                                <a href={"/home/" + this.props.username[0] + "/allTransactions"} class="btn btn-primary">All Transactions</a>
+                                <a href={"/home/" + this.props.username[0] + "/accounts"} class="btn btn-primary">All Accounts</a>
                             </div>
+                            <div>
+                                <a href={"/home/" + this.props.username[0] + "/newAccount"} class="btn  btn-secondary btn-info">Add New Account</a>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div className="row justify-content-center">
+                    <div className='col-4'>
+                        <div class="card mb-3">
+                          <h3 class="card-header">{this.props.transactions.rows[0].type}</h3>
+                          <img className="card-img" src={this.props.transactions.rows[0].type_icon}/>
+
+                          <div class="card-body">
+                            <p class="card-text">Billing Date: 20th of month</p>
+                          </div>
+
                         </div>
                     </div>
                 </div>
 
+                <h2>Transactions for {this.props.transactions.rows[0].type}</h2>
+                  <div class="table-responsive">
+                    <table className="table table-striped table-sm table-primary table-hover">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Amount</th>
+                          <th colSpan="2">Category</th>
+                          <th>Account</th>
+                          <th>Details</th>
+                          <th class="text-center" colSpan="2">Actions</th>
+                        </tr>
+                      </thead>
 
-                <div className="row">
-                    <div className="col-12">
-                        <blockquote class="blockquote text-center">
-                            <h3>Monthly Expenditure</h3>
-                        </blockquote>
-                        {monthChart}
-                    </div>
+                      {accTxns}
+
+
+                    </table>
+                  </div>
                 </div>
-
-
-
-
-              <h2>Transaction History</h2>
-              <div class="table-responsive">
-                <table className="table table-striped table-sm table-primary table-hover">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Amount</th>
-                      <th colSpan="2">Category</th>
-                      <th>Account</th>
-                      <th>Details</th>
-                      <th class="text-center" colSpan="2">Actions</th>
-                    </tr>
-                  </thead>
-
-                  {allTxns}
-
-
-                </table>
-              </div>
-            </div>
 
 
 
@@ -149,8 +135,10 @@ class Transactions extends React.Component {
         </html>
 
 
+
+
     );
   }
 }
 
-module.exports = Transactions;
+module.exports = AccountTxns;

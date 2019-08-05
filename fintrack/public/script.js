@@ -10,6 +10,7 @@ window.onload = function() {
     Chart.defaults.global.defaultFontSize = 14;
     Chart.defaults.global.defaultFontColor = 'rgba(255,99,132,1)';
 
+
     let labelValues = [];
     data.categories.forEach(label=>{
         labelValues.push(label.cat_name);
@@ -64,12 +65,13 @@ window.onload = function() {
           display:true,
           position:'right',
           labels:{
-            fontColor:'rgba(255,99,132,1)'
+            // fontColor:'rgba(255,99,132,1)'
+            fontColor: 'white'
           }
         },
         layout:{
           padding:{
-            left:50,
+            left:0,
             right:0,
             bottom:0,
             top:0
